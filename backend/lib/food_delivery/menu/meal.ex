@@ -7,7 +7,9 @@ defmodule FoodDelivery.Menu.Meal do
     field(:description, :string)
     field(:name, :string)
     field(:price, :integer)
-    field(:restaurant_id, :id)
+    belongs_to(:restaurant, Restaurant)
+
+    many_to_many(:orders, Order, join_through: OrderMeal)
 
     timestamps()
   end

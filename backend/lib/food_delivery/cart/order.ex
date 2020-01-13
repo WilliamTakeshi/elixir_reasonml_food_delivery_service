@@ -5,7 +5,8 @@ defmodule FoodDelivery.Cart.Order do
   schema "orders" do
     field(:date, :utc_datetime)
     field(:status, :string, default: "not_placed")
-    field(:restaurant_id, :id)
+    belongs_to(:restaurant, Restaurant)
+    many_to_many(:meals, Meal, join_through: OrderMeal)
     timestamps()
   end
 

@@ -4,6 +4,7 @@ defmodule FoodDelivery.Users.User do
   Managed by the "pow" library.
   """
   use Ecto.Schema
+  import Ecto.Changeset
   use Pow.Ecto.Schema
 
   use Pow.Extension.Ecto.Schema,

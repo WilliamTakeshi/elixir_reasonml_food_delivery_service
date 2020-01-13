@@ -3,9 +3,11 @@ defmodule FoodDelivery.Menu.Restaurant do
   import Ecto.Changeset
 
   schema "restaurants" do
-    field :description, :string
-    field :name, :string
-    field :owner_id, :id
+    field(:description, :string)
+    field(:name, :string)
+    belongs_to(:user, User)
+    has_many(:meals, Meal)
+    has_many(:orders, Order)
 
     timestamps()
   end
