@@ -10,6 +10,10 @@ use Mix.Config
 config :food_delivery,
   ecto_repos: [FoodDelivery.Repo]
 
+config :food_delivery, :pow,
+  user: FoodDelivery.Users.User,
+  repo: FoodDelivery.Repo
+
 # Configures the endpoint
 config :food_delivery, FoodDeliveryWeb.Endpoint,
   url: [host: "localhost"],
