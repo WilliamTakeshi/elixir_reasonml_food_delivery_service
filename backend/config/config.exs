@@ -14,6 +14,7 @@ config :food_delivery,
 config :food_delivery, :pow,
   user: FoodDelivery.Users.User,
   repo: FoodDelivery.Repo,
+  mailer_backend: FoodDeliveryWeb.PowMailer,
   extensions: [PowResetPassword, PowEmailConfirmation],
   controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks
 
