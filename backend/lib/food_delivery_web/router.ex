@@ -25,6 +25,9 @@ defmodule FoodDeliveryWeb.Router do
   scope "/api/v1", FoodDeliveryWeb do
     pipe_through([:api, :api_protected])
 
+    resources("/restaurants", RestaurantController, except: [:new, :edit])
+    resources("/meals", MealController, except: [:new, :edit])
+
     # Your protected API endpoints here
   end
 end
