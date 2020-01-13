@@ -27,6 +27,7 @@ defmodule FoodDeliveryWeb.Router do
 
     resources("/restaurants", RestaurantController, except: [:new, :edit])
     resources("/meals", MealController, except: [:new, :edit])
+    resources("/orders", OrderController, except: [:new, :edit])
 
     # Your protected API endpoints here
   end

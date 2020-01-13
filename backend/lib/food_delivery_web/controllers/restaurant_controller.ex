@@ -28,7 +28,8 @@ defmodule FoodDeliveryWeb.RestaurantController do
   def update(conn, %{"id" => id, "restaurant" => restaurant_params}) do
     restaurant = Menu.get_restaurant!(id)
 
-    with {:ok, %Restaurant{} = restaurant} <- Menu.update_restaurant(restaurant, restaurant_params) do
+    with {:ok, %Restaurant{} = restaurant} <-
+           Menu.update_restaurant(restaurant, restaurant_params) do
       render(conn, "show.json", restaurant: restaurant)
     end
   end

@@ -26,7 +26,7 @@ defmodule FoodDelivery.Users.User do
   @spec changeset_role(Ecto.Schema.t() | Ecto.Changeset.t(), map()) :: Ecto.Changeset.t()
   def changeset_role(user_or_changeset, attrs) do
     user_or_changeset
-    |> Ecto.Changeset.cast(attrs, [:role])
-    |> Ecto.Changeset.validate_inclusion(:role, ~w(user owner admin))
+    |> cast(attrs, [:role])
+    |> validate_inclusion(:role, ~w(user owner admin))
   end
 end

@@ -53,8 +53,13 @@ defmodule FoodDeliveryWeb.RestaurantControllerTest do
   describe "update restaurant" do
     setup [:create_restaurant]
 
-    test "renders restaurant when data is valid", %{conn: conn, restaurant: %Restaurant{id: id} = restaurant} do
-      conn = put(conn, Routes.restaurant_path(conn, :update, restaurant), restaurant: @update_attrs)
+    test "renders restaurant when data is valid", %{
+      conn: conn,
+      restaurant: %Restaurant{id: id} = restaurant
+    } do
+      conn =
+        put(conn, Routes.restaurant_path(conn, :update, restaurant), restaurant: @update_attrs)
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.restaurant_path(conn, :show, id))
@@ -67,7 +72,9 @@ defmodule FoodDeliveryWeb.RestaurantControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, restaurant: restaurant} do
-      conn = put(conn, Routes.restaurant_path(conn, :update, restaurant), restaurant: @invalid_attrs)
+      conn =
+        put(conn, Routes.restaurant_path(conn, :update, restaurant), restaurant: @invalid_attrs)
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
