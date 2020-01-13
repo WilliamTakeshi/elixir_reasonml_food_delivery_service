@@ -10,7 +10,9 @@ defmodule FoodDeliveryWeb.RegistrationController do
     conn
     |> Pow.Plug.create_user(user_params)
     |> case do
-      {:ok, _user, conn} ->
+      {:ok, user, conn} ->
+        send_confirmation_email(user, conn)
+
         json(conn, %{
           data: %{
             token: conn.private[:api_auth_token],
@@ -25,5 +27,19 @@ defmodule FoodDeliveryWeb.RegistrationController do
         |> put_status(500)
         |> json(%{error: %{status: 500, message: "Couldn't create user", errors: errors}})
     end
+  end
+
+  @spec send_confirmation_email(map(), Conn.t()) :: any()
+  defp send_confirmation_email(user, conn) do
+    url = confirmation_url(user.email_confirmation_token)
+    unconfirmed_user = %{user | email: user.unconfirmed_email || user.email}
+    email = PowEmailConfirmation.Phoenix.Mailer.email_confirmation(conn, unconfirmed_user, url)
+
+    Pow.Phoenix.Mailer.deliver(conn, email)
+  end
+
+  defp confirmation_url(token) do
+    Application.get_env(:food_delivery, FoodDeliveryWeb.Endpoint)[:front_end_email_confirm_url]
+    |> String.replace("{token}", token)
   end
 end

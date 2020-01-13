@@ -10,9 +10,17 @@ use Mix.Config
 config :food_delivery,
   ecto_repos: [FoodDelivery.Repo]
 
+# Configures the pow authentication
 config :food_delivery, :pow,
   user: FoodDelivery.Users.User,
-  repo: FoodDelivery.Repo
+  repo: FoodDelivery.Repo,
+  extensions: [PowResetPassword, PowEmailConfirmation],
+  controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks
+
+# Configures the bamboo mailer
+config :food_delivery, FoodDelivery.Mailer,
+  adapter: Bamboo.SendGridAdapter,
+  api_key: "my_api_key"
 
 # Configures the endpoint
 config :food_delivery, FoodDeliveryWeb.Endpoint,

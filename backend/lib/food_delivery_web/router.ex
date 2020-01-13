@@ -16,6 +16,10 @@ defmodule FoodDeliveryWeb.Router do
     resources("/registration", RegistrationController, singleton: true, only: [:create])
     resources("/session", SessionController, singleton: true, only: [:create, :delete])
     post("/session/renew", SessionController, :renew)
+    post("/reset-password", ResetPasswordController, :create)
+    post("/reset-password/update", ResetPasswordController, :update)
+
+    resources("/confirm-email", ConfirmationController, only: [:show])
   end
 
   scope "/api/v1", FoodDeliveryWeb do
