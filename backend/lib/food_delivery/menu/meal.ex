@@ -14,10 +14,13 @@ defmodule FoodDelivery.Menu.Meal do
     timestamps()
   end
 
+  @required ~w(name price active)a
+  @optional ~w(description)a
+
   @doc false
   def changeset(meal, attrs) do
     meal
-    |> cast(attrs, [:name, :description, :price, :active])
-    |> validate_required([:name, :description, :price])
+    |> cast(attrs, @required ++ @optional)
+    |> validate_required(@required)
   end
 end

@@ -3,11 +3,11 @@ defmodule FoodDelivery.Repo.Migrations.CreateMeals do
 
   def change do
     create table(:meals) do
-      add(:name, :string)
+      add(:name, :string, null: false)
       add(:description, :string)
-      add(:price, :integer)
-      add(:active, :boolean, default: false, null: false)
-      add(:restaurant_id, references(:restaurants, on_delete: :nothing))
+      add(:price, :integer, null: false)
+      add(:active, :boolean, default: true, null: false)
+      add(:restaurant_id, references(:restaurants, on_delete: :nothing), null: false)
 
       timestamps()
     end
