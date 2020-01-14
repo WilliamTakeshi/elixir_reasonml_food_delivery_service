@@ -39,7 +39,10 @@ function NotFound(Props) {
               className: container
             }, React.createElement("div", {
                   className: image
-                }, React.createElement("p", undefined, "Add 404 Image")), React.createElement("div", {
+                }, React.createElement("p", undefined, "Add 404 Image"), React.createElement("img", {
+                      alt: "Page not found",
+                      src: "/src/notfound404.png"
+                    })), React.createElement("div", {
                   className: text
                 }, React.createElement("span", undefined, "The page you're looking for can't be found. Go home by "), React.createElement(Link$ReasonReactExamples.make, {
                       href: "/",

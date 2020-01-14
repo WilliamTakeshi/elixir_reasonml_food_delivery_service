@@ -22,8 +22,8 @@ let make = () =>
   <div className=Styles.container>
     <div className=Styles.image>
       <p> {React.string("Add 404 Image")} </p>
+      <img alt="Page not found" src="/src/notfound404.png" />
     </div>
-    // <img alt="Page not found" />
     <div className=Styles.text>
       <span>
         {React.string(
