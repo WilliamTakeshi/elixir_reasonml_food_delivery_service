@@ -7,13 +7,66 @@ type state = {
 };
 
 type action =
-  | Login((bool, list(string)))
   | EmailUpdate(string)
   | PasswordUpdate(string)
+  | Login((bool, list(string)))
   | LoginPending;
 
+let loginUser = (route, event, {ReasonReact.state, reduce}) => {
+  ReactEventRe.Mouse.preventDefault(event);
+  let reduceByAuthResult = (_status, jsonPayload) =>
+    jsonPayload
+    |> Js.Promise.then_(json => {
+         let newUser = JsonRequests.checkForErrors(json);
+         let updatedState =
+           switch (newUser) {
+           | Some(errors) => {
+               ...state,
+               hasValidationError: true,
+               errorList: errors |> JsonRequests.convertErrorsToList,
+             }
+           | None =>
+             let loggedIn = JsonRequests.parseNewUser(json);
+             Effects.saveTokenToStorage(loggedIn.user.token);
+             Effects.saveUserToStorage(
+               loggedIn.user.username,
+               loggedIn.user.bio,
+             );
+             DirectorRe.setRoute(route, "/home");
+             {...state, hasValidationError: false};
+           };
+         let callLoginReducer = _payload =>
+           Login((updatedState.hasValidationError, updatedState.errorList));
+         reduce(callLoginReducer, ()) |> Js.Promise.resolve;
+       });
+  JsonRequests.authenticateUser(reduceByAuthResult, Encode.user(state))
+  |> ignore;
+  reduce(_ => LoginPending, ());
+};
+
+let reducer = (state, action) =>
+  switch (action) {
+  | EmailUpdate(value) => {...state, email: value}
+  | PasswordUpdate(value) => {...state, password: value}
+  | Login((hasError, errorList)) => {
+      ...state,
+      hasValidationError: hasError,
+      errorList,
+    }
+  | LoginPending => state
+  };
+
+let initialState = {
+  email: "",
+  password: "",
+  hasValidationError: false,
+  errorList: [],
+};
+
 [@react.component]
-let make = () =>
+let make = () => {
+  let (state, dispatch) = React.useReducer(reducer, initialState);
+
   <div className="auth-page">
     <div className="container page">
       <div className="row">
@@ -29,8 +82,10 @@ let make = () =>
                   type_="text"
                   className="form-control form-control-lg"
                   placeholder="Email"
-                  // value={state.email}
-                  // onChange={reduce(updateEmail)}
+                  value={state.email}
+                  onChange={e =>
+                    dispatch(EmailUpdate(ReactEvent.Form.target(e)##value))
+                  }
                 />
               </fieldset>
               <fieldset className="form-group">
@@ -38,11 +93,14 @@ let make = () =>
                   type_="password"
                   className="form-control form-control-lg"
                   placeholder="Password"
-                  // value={state.password}
-                  // onChange={reduce(updatePassword)}
+                  value={state.password}
+                  onChange={e =>
+                    dispatch(
+                      PasswordUpdate(ReactEvent.Form.target(e)##value),
+                    )
+                  }
                 />
               </fieldset>
-              // onClick={self.handle(loginUser(router))}
               <button className="btn btn-lg btn-primary pull-xs-right">
                 {str("Sign in")}
               </button>
@@ -52,3 +110,4 @@ let make = () =>
       </div>
     </div>
   </div>;
+};
