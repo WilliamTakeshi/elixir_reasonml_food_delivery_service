@@ -44,5 +44,7 @@ defmodule FoodDeliveryWeb.Endpoint do
     signing_salt: "KB/V2JcK"
   )
 
+  plug(CORSPlug)
+
   plug(FoodDeliveryWeb.Router)
 end
