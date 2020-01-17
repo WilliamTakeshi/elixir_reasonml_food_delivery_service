@@ -4,7 +4,7 @@ defmodule FoodDeliveryWeb.RestaurantController do
   alias FoodDelivery.Menu
   alias FoodDelivery.Menu.Restaurant
 
-  action_fallback FoodDeliveryWeb.FallbackController
+  action_fallback(FoodDeliveryWeb.FallbackController)
 
   def index(conn, _params) do
     restaurants = Menu.list_restaurants()
@@ -21,23 +21,22 @@ defmodule FoodDeliveryWeb.RestaurantController do
   end
 
   def show(conn, %{"id" => id}) do
-    restaurant = Menu.get_restaurant!(id)
-    render(conn, "show.json", restaurant: restaurant)
+    with {:ok, restaurant} <- Menu.get_restaurant(id) do
+      render(conn, "show.json", restaurant: restaurant)
+    end
   end
 
   def update(conn, %{"id" => id, "restaurant" => restaurant_params}) do
-    restaurant = Menu.get_restaurant!(id)
-
-    with {:ok, %Restaurant{} = restaurant} <-
+    with {:ok, restaurant} <- Menu.get_restaurant(id),
+         {:ok, %Restaurant{} = restaurant} <-
            Menu.update_restaurant(restaurant, restaurant_params) do
       render(conn, "show.json", restaurant: restaurant)
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    restaurant = Menu.get_restaurant!(id)
-
-    with {:ok, %Restaurant{}} <- Menu.delete_restaurant(restaurant) do
+    with {:ok, restaurant} <- Menu.get_restaurant(id),
+         {:ok, %Restaurant{}} <- Menu.delete_restaurant(restaurant) do
       send_resp(conn, :no_content, "")
     end
   end

@@ -11,6 +11,11 @@ defmodule FoodDeliveryWeb.RestaurantView do
   end
 
   def render("restaurant.json", %{restaurant: restaurant}) do
-    %{id: restaurant.id, name: restaurant.name, description: restaurant.description}
+    %{
+      id: restaurant.id,
+      name: restaurant.name,
+      description: restaurant.description,
+      img_url: restaurant.img_url
+    }
   end
 end

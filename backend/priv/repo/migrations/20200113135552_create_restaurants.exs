@@ -4,7 +4,8 @@ defmodule FoodDelivery.Repo.Migrations.CreateRestaurants do
   def change do
     create table(:restaurants) do
       add(:name, :string, null: false)
-      add(:description, :string)
+      add(:description, :string, default: "")
+      add(:img_url, :string, default: "")
       add(:owner_id, references(:users, on_delete: :nothing), null: false)
 
       timestamps()

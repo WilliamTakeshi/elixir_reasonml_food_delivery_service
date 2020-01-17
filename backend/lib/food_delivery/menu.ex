@@ -36,7 +36,12 @@ defmodule FoodDelivery.Menu do
       ** (Ecto.NoResultsError)
 
   """
-  def get_restaurant!(id), do: Repo.get!(Restaurant, id)
+  def get_restaurant(id) do
+    case Repo.get(Restaurant, id) do
+      nil -> {:error, :not_found}
+      restaurant -> {:ok, restaurant}
+    end
+  end
 
   @doc """
   Creates a restaurant.

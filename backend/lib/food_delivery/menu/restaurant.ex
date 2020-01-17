@@ -3,17 +3,18 @@ defmodule FoodDelivery.Menu.Restaurant do
   import Ecto.Changeset
 
   schema "restaurants" do
-    field(:description, :string)
     field(:name, :string)
-    belongs_to(:user, User)
-    has_many(:meals, Meal)
-    has_many(:orders, Order)
+    field(:description, :string, default: "")
+    field(:img_url, :string, default: "")
+    belongs_to(:user, User, foreign_key: :owner_id)
+    has_many(:meals, FoodDelivery.Menu.Meal)
+    has_many(:orders, FoodDelivery.Cart.Order)
 
     timestamps()
   end
 
   @required ~w(name)a
-  @optional ~w(description)a
+  @optional ~w(description img_url)a
   @doc false
   def changeset(restaurant, attrs) do
     restaurant
