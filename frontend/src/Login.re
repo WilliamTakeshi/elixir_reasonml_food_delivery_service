@@ -1,3 +1,7 @@
+// open Belt;
+
+let apiBaseUrl = "http://localhost:4000";
+
 let str = ReasonReact.string;
 type state = {
   email: string,
@@ -35,12 +39,50 @@ let reducer = (state, action) =>
 
 let valueFromEvent = (evt): string => evt->ReactEvent.Form.target##value;
 
+type login = {
+  token: string,
+  renew_token: string,
+};
+
+module Decode = {
+  let loginResponse = (json): login => {
+    Json.Decode.{
+      token: json |> field("token", string),
+      renew_token: json |> field("renew_token", string),
+    };
+  };
+};
+
+let postLogin = state =>
+  Js.Promise.(
+    Fetch.fetchWithInit(
+      {j|$apiBaseUrl/api/v1/session|j},
+      Fetch.RequestInit.make(
+        ~method_=Post,
+        ~body=Fetch.BodyInit.make(Js.Json.stringify(state)),
+        ~headers=Fetch.HeadersInit.make({"Content-Type": "application/json"}),
+        (),
+      ),
+    )
+    |> then_(Fetch.Response.json)
+    |> then_(json =>
+         json
+         |> Decode.loginResponse
+         |> (
+           _login => {
+             resolve();
+           }
+         )
+       )
+    |> ignore
+  ); /* TODO: error handling */
+
 [@react.component]
 let make = () => {
   let (state, dispatch) = React.useReducer(reducer, initialState);
 
-  let handleSubmit = _evt => {
-    Js.log("rst");
+  let handleSubmit = state => {
+    postLogin(state);
     dispatch(ResetState);
   };
 
@@ -67,7 +109,21 @@ let make = () => {
             onChange={evt => valueFromEvent(evt)->PasswordUpdate |> dispatch}
           />
           <button
-            onClick=handleSubmit
+            onClick={_evt =>
+              handleSubmit(
+                Json.Encode.(
+                  object_([
+                    (
+                      "user",
+                      object_([
+                        ("email", string(state.email)),
+                        ("password", string(state.password)),
+                      ]),
+                    ),
+                  ])
+                ),
+              )
+            }
             className="btn btn-lg btn-primary pull-xs-right">
             {str("Sign in")}
           </button>
