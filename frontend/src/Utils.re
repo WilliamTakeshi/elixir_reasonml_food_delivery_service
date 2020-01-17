@@ -33,3 +33,5 @@ let distanceFromBottom: unit => int =
 
 [@bs.module]
 external registerServiceWorker: unit => unit = "src/registerServiceWorker";
+
+let valueFromEvent = (evt): string => evt->ReactEvent.Form.target##value;

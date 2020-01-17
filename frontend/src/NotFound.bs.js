@@ -39,7 +39,7 @@ function NotFound(Props) {
               className: container
             }, React.createElement("div", {
                   className: image
-                }, React.createElement("p", undefined, "Add 404 Image"), React.createElement("img", {
+                }, React.createElement("img", {
                       alt: "Page not found",
                       src: "/src/notfound404.png"
                     })), React.createElement("div", {

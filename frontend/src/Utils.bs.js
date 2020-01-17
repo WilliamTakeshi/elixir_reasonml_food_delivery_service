@@ -25,7 +25,12 @@ function distanceFromBottom(param) {
   return bodyClientHeight - (windowScrollY + windowInnerHeight | 0) | 0;
 }
 
+function valueFromEvent(evt) {
+  return evt.target.value;
+}
+
 exports.fromNow = fromNow;
 exports.dangerousHtml = dangerousHtml;
 exports.distanceFromBottom = distanceFromBottom;
+exports.valueFromEvent = valueFromEvent;
 /* No side effect */

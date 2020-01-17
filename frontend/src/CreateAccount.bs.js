@@ -15,23 +15,21 @@ function str(prim) {
 var initialState = {
   email: "",
   password: "",
+  confirmPassword: "",
   hasValidationError: false,
   errorList: /* [] */0
 };
 
 function reducer(state, action) {
   if (typeof action === "number") {
-    if (action === /* LoginPending */0) {
-      return state;
-    } else {
-      return initialState;
-    }
+    return initialState;
   } else {
     switch (action.tag | 0) {
       case /* EmailUpdate */0 :
           return {
                   email: action[0],
                   password: state.password,
+                  confirmPassword: state.confirmPassword,
                   hasValidationError: state.hasValidationError,
                   errorList: state.errorList
                 };
@@ -39,23 +37,24 @@ function reducer(state, action) {
           return {
                   email: state.email,
                   password: action[0],
+                  confirmPassword: state.confirmPassword,
                   hasValidationError: state.hasValidationError,
                   errorList: state.errorList
                 };
-      case /* Login */2 :
-          var match = action[0];
+      case /* ConfirmPasswordUpdate */2 :
           return {
                   email: state.email,
                   password: state.password,
-                  hasValidationError: match[0],
-                  errorList: match[1]
+                  confirmPassword: action[0],
+                  hasValidationError: state.hasValidationError,
+                  errorList: state.errorList
                 };
       
     }
   }
 }
 
-function Login(Props) {
+function CreateAccount(Props) {
   var match = React.useReducer(reducer, initialState);
   var dispatch = match[1];
   var state = match[0];
@@ -69,9 +68,9 @@ function Login(Props) {
                           className: "col-md-6 offset-md-3 col-xs-12"
                         }, React.createElement("h1", {
                               className: "text-xs-center"
-                            }, "Login"), React.createElement(Link$ReasonReactExamples.make, {
-                              href: "/createaccount",
-                              children: "Need an account?"
+                            }, "Create an account"), React.createElement(Link$ReasonReactExamples.make, {
+                              href: "/",
+                              children: "Already have an account"
                             }), React.createElement("input", {
                               className: "form-control form-control-lg",
                               placeholder: "Email",
@@ -87,6 +86,14 @@ function Login(Props) {
                               value: state.password,
                               onChange: (function (evt) {
                                   return Curry._1(dispatch, /* PasswordUpdate */Block.__(1, [Utils$ReasonReactExamples.valueFromEvent(evt)]));
+                                })
+                            }), React.createElement("input", {
+                              className: "form-control form-control-lg",
+                              placeholder: "Confirm Password",
+                              type: "password",
+                              value: state.confirmPassword,
+                              onChange: (function (evt) {
+                                  return Curry._1(dispatch, /* ConfirmPasswordUpdate */Block.__(2, [Utils$ReasonReactExamples.valueFromEvent(evt)]));
                                 })
                             }), React.createElement("button", {
                               className: "btn btn-lg btn-primary pull-xs-right",
@@ -104,19 +111,25 @@ function Login(Props) {
                                                     "password",
                                                     state.password
                                                   ],
-                                                  /* [] */0
+                                                  /* :: */[
+                                                    /* tuple */[
+                                                      "confirm_password",
+                                                      state.confirmPassword
+                                                    ],
+                                                    /* [] */0
+                                                  ]
                                                 ]
                                               ])
                                         ],
                                         /* [] */0
                                       ]);
-                                  AuthData$ReasonReactExamples.postLogin(state$1);
-                                  return Curry._1(dispatch, /* ResetState */1);
+                                  AuthData$ReasonReactExamples.registration(state$1);
+                                  return Curry._1(dispatch, /* ResetState */0);
                                 })
-                            }, "Sign in")))));
+                            }, "Create")))));
 }
 
-var make = Login;
+var make = CreateAccount;
 
 exports.str = str;
 exports.initialState = initialState;
