@@ -3,7 +3,7 @@ defmodule FoodDelivery.Cart.OrderMeal do
   import Ecto.Changeset
 
   schema "orders_meals" do
-    belongs_to(:order, Order)
+    belongs_to(:order, FoodDelivery.Cart.Order)
     belongs_to(:meal, Meal)
 
     timestamps()

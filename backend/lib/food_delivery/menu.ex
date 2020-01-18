@@ -23,7 +23,7 @@ defmodule FoodDelivery.Menu do
   end
 
   @doc """
-  Gets a single restaurant.
+  Gets a single restaurant with meals.
 
   Raises `Ecto.NoResultsError` if the Restaurant does not exist.
 
@@ -34,6 +34,29 @@ defmodule FoodDelivery.Menu do
 
       iex> get_restaurant!(456)
       ** (Ecto.NoResultsError)
+
+  """
+  def get_restaurant_with_meals(id) do
+    Repo.all(
+      from(r in Restaurant,
+        preload: :meals,
+        where: r.id == ^id
+      )
+    )
+  end
+
+  @doc """
+  Gets a single restaurant.
+
+  Returns {:error, :not_found} if the Restaurant does not exist.
+
+  ## Examples
+
+      iex> get_restaurant!(123)
+      %Restaurant{}
+
+      iex> get_restaurant!(456)
+      {:error, :not_found}
 
   """
   def get_restaurant(id) do
@@ -124,7 +147,7 @@ defmodule FoodDelivery.Menu do
   @doc """
   Gets a single meal.
 
-  Raises `Ecto.NoResultsError` if the Meal does not exist.
+  Return {:error, :not_found} if the Meal does not exist.
 
   ## Examples
 
@@ -135,7 +158,21 @@ defmodule FoodDelivery.Menu do
       ** (Ecto.NoResultsError)
 
   """
-  def get_meal!(id), do: Repo.get!(Meal, id)
+  def get_meal(id, restaurant_id) do
+    meal =
+      Repo.one(
+        from(m in Meal,
+          join: r in assoc(m, :restaurant),
+          where: m.id == ^id,
+          where: r.id == ^restaurant_id
+        )
+      )
+
+    case meal do
+      nil -> {:error, :not_found}
+      meal -> {:ok, meal}
+    end
+  end
 
   @doc """
   Creates a meal.

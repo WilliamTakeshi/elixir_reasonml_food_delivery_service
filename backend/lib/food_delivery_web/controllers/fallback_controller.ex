@@ -19,4 +19,11 @@ defmodule FoodDeliveryWeb.FallbackController do
     |> put_view(FoodDeliveryWeb.ErrorView)
     |> render(:"404")
   end
+
+  def call(conn, _) do
+    conn
+    |> put_status(:internal_server_error)
+    |> put_view(FoodDeliveryWeb.ErrorView)
+    |> render(:"500")
+  end
 end

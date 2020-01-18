@@ -11,32 +11,36 @@ defmodule FoodDeliveryWeb.MealController do
     render(conn, "index.json", meals: meals)
   end
 
-  def create(conn, %{"meal" => meal_params}) do
+  def create(conn, %{"meal" => meal_params, "restaurant_id" => restaurant_id}) do
+    meal_params = Map.put(meal_params, "restaurant_id", restaurant_id)
+
     with {:ok, %Meal{} = meal} <- Menu.create_meal(meal_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.meal_path(conn, :show, meal))
+      |> put_resp_header(
+        "location",
+        Routes.restaurant_meal_path(conn, :show, restaurant_id, meal)
+      )
       |> render("show.json", meal: meal)
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    meal = Menu.get_meal!(id)
-    render(conn, "show.json", meal: meal)
-  end
-
-  def update(conn, %{"id" => id, "meal" => meal_params}) do
-    meal = Menu.get_meal!(id)
-
-    with {:ok, %Meal{} = meal} <- Menu.update_meal(meal, meal_params) do
+  def show(conn, %{"id" => id, "restaurant_id" => restaurant_id}) do
+    with {:ok, meal} <- Menu.get_meal(id, restaurant_id) do
       render(conn, "show.json", meal: meal)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    meal = Menu.get_meal!(id)
+  def update(conn, %{"id" => id, "meal" => meal_params, "restaurant_id" => restaurant_id}) do
+    with {:ok, meal} <- Menu.get_meal(id, restaurant_id),
+         {:ok, %Meal{} = meal} <- Menu.update_meal(meal, meal_params) do
+      render(conn, "show.json", meal: meal)
+    end
+  end
 
-    with {:ok, %Meal{}} <- Menu.delete_meal(meal) do
+  def delete(conn, %{"id" => id, "restaurant_id" => restaurant_id}) do
+    with {:ok, meal} <- Menu.get_meal(id, restaurant_id),
+         {:ok, %Meal{}} <- Menu.delete_meal(meal) do
       send_resp(conn, :no_content, "")
     end
   end

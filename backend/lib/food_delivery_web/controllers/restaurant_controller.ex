@@ -21,7 +21,7 @@ defmodule FoodDeliveryWeb.RestaurantController do
   end
 
   def show(conn, %{"id" => id}) do
-    with {:ok, restaurant} <- Menu.get_restaurant(id) do
+    with [restaurant] <- Menu.get_restaurant_with_meals(id) do
       render(conn, "show.json", restaurant: restaurant)
     end
   end
