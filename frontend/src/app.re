@@ -9,8 +9,9 @@ let make = () => {
   let url = ReasonReact.Router.useUrl();
 
   switch (url.path) {
-  | [] => <Login />
-  | ["createaccount"] => <CreateAccount />
-  | _ => <NotFound />
+  | [] => <LoginPage />
+  | ["createaccount"] => <CreateAccountPage />
+  | ["restaurants"] => <RestaurantsPage />
+  | _ => <NotFoundPage />
   };
 };

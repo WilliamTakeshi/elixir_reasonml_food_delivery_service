@@ -35,3 +35,5 @@ let distanceFromBottom: unit => int =
 external registerServiceWorker: unit => unit = "src/registerServiceWorker";
 
 let valueFromEvent = (evt): string => evt->ReactEvent.Form.target##value;
+
+let str = ReasonReact.string;
