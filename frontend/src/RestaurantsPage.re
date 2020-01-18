@@ -33,7 +33,7 @@ let make = () => {
          ->(
              Array.mapWithIndex((index, restaurant) =>
                <RestaurantCard
-                 key={string_of_int(restaurant.id + index)}
+                 key={string_of_int(restaurant.id)}
                  index
                  restaurant
                />

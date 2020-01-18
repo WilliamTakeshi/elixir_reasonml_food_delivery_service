@@ -12,6 +12,7 @@ let make = () => {
   | [] => <LoginPage />
   | ["createaccount"] => <CreateAccountPage />
   | ["restaurants"] => <RestaurantsPage />
+  | ["restaurants", id] => <RestaurantPage id={int_of_string(id)} />
   | _ => <NotFoundPage />
   };
 };
