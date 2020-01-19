@@ -43,6 +43,7 @@ let make = () => {
 
   let handleSubmit = state => {
     AuthData.registration(state);
+    ReasonReact.Router.push("/");
     dispatch(ResetState);
   };
 

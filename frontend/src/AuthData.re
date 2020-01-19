@@ -1,12 +1,34 @@
 let apiBaseUrl = "http://localhost:4000";
 
-type login = {
+type token = {
   token: string,
   renew_token: string,
 };
 
+let saveTokenToStorage = value => {
+  Dom.Storage.(localStorage |> setItem("jwt", value));
+};
+
+let getTokenFromStorage = () => {
+  Dom.Storage.(localStorage |> getItem("jwt"));
+};
+
+let saveRenewTokenToStorage = value => {
+  Dom.Storage.(localStorage |> setItem("jwt", value));
+};
+
+let getRenewTokenFromStorage = () => {
+  Dom.Storage.(localStorage |> getItem("jwt"));
+};
+
+let isUserLoggedIn = () => {
+  switch (getTokenFromStorage()) {
+  | None => false
+  | Some(_) => true
+  };
+};
 module Decode = {
-  let loginResponse = (json): login => {
+  let token = (json): token => {
     Json.Decode.{
       token: json |> field("token", string),
       renew_token: json |> field("renew_token", string),
@@ -14,7 +36,7 @@ module Decode = {
   };
 };
 
-let postLogin = body =>
+let login = body =>
   Js.Promise.(
     Fetch.fetchWithInit(
       {j|$apiBaseUrl/api/v1/session|j},
@@ -28,9 +50,11 @@ let postLogin = body =>
     |> then_(Fetch.Response.json)
     |> then_(json =>
          json
-         |> Decode.loginResponse
+         |> Json.Decode.(at(["data"], Decode.token))
          |> (
-           _login => {
+           token => {
+             saveTokenToStorage(token.token);
+             saveRenewTokenToStorage(token.renew_token);
              resolve();
            }
          )
@@ -52,7 +76,7 @@ let registration = body =>
     |> then_(Fetch.Response.json)
     |> then_(json =>
          json
-         |> Decode.loginResponse
+         |> Json.Decode.(at(["data"], Decode.token))
          |> (
            _login => {
              resolve();

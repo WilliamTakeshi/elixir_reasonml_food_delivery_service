@@ -43,7 +43,8 @@ let make = () => {
   let (state, dispatch) = React.useReducer(reducer, initialState);
 
   let handleSubmit = state => {
-    AuthData.postLogin(state);
+    AuthData.login(state);
+    ReasonReact.Router.push("/");
     dispatch(ResetState);
   };
 
@@ -97,7 +98,7 @@ let make = () => {
             )
           }
           className="btn btn-lg btn-primary pull-xs-right">
-          {str("Sign in")}
+          {str("Login")}
         </button>
       </div>
     </div>

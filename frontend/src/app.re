@@ -7,14 +7,20 @@
 [@react.component]
 let make = () => {
   let url = ReasonReact.Router.useUrl();
+  if (!AuthData.isUserLoggedIn() && url.path != ["login"]) {
+    ReasonReact.Router.push("/login");
+  };
+
   <div>
     <Nav />
-    {switch (url.path) {
-     | [] => <LoginPage />
-     | ["createaccount"] => <CreateAccountPage />
-     | ["restaurants"] => <RestaurantsPage />
-     | ["restaurants", id] => <RestaurantPage id={int_of_string(id)} />
-     | _ => <NotFoundPage />
+    {switch (url.path, AuthData.isUserLoggedIn()) {
+     | ([], true)
+     | (["restaurants"], true) => <RestaurantsPage />
+     | (["login"], false) => <LoginPage />
+     | (["createaccount"], true) => <CreateAccountPage />
+     | (["restaurants", id], true) =>
+       <RestaurantPage id={int_of_string(id)} />
+     | (_, _) => <NotFoundPage />
      }}
   </div>;
 };
