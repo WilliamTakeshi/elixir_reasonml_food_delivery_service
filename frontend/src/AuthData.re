@@ -85,3 +85,18 @@ let registration = body =>
        )
     |> ignore
   ); /* TODO: error handling */
+
+let confirmEmail = (token: string, callback) => {
+  Js.Promise.
+    (
+      Fetch.fetch({j|$apiBaseUrl/api/v1/confirm_email/$token|j})
+      |> then_(Fetch.Response.json)
+      |> then_(_json => {
+           callback(_ => "Email confirmed with success");
+           Js.Global.setTimeout(_ => ReasonReact.Router.push("/"), 1500)
+           |> ignore;
+           resolve();
+         })
+      |> ignore
+    ); /* TODO: error handling */
+};

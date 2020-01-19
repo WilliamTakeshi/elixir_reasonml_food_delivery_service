@@ -12,8 +12,8 @@ config :food_delivery, FoodDeliveryWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [],
-  front_end_reset_password_url: "http://localhost:8000/reset-password/{token}",
-  front_end_email_confirm_url: "http://localhost:8000/confirm-email/{token}"
+  front_end_reset_password_url: "http://localhost:8000/reset_password/{token}",
+  front_end_email_confirm_url: "http://localhost:8000/confirm_email/{token}"
 
 # ## SSL Support
 #

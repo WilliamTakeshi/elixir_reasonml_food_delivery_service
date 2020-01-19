@@ -13,8 +13,8 @@ config :food_delivery, FoodDeliveryWeb.Endpoint,
   http: [:inet6, port: System.get_env("PORT") || 4000],
   url: [host: "example.com", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json",
-  front_end_reset_password_url: "http://localhost:8000/reset-password/{token}",
-  front_end_email_confirm_url: "http://localhost:8000/confirm-email/{token}"
+  front_end_reset_password_url: "http://localhost:8000/reset_password/{token}",
+  front_end_email_confirm_url: "http://localhost:8000/confirm_email/{token}"
 
 # Do not print debug messages in production
 config :logger, level: :info
