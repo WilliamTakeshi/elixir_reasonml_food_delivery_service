@@ -15,13 +15,9 @@ config :food_delivery, :pow,
   user: FoodDelivery.Users.User,
   repo: FoodDelivery.Repo,
   mailer_backend: FoodDeliveryWeb.PowMailer,
+  web_mailer_module: FoodDeliveryWeb,
   extensions: [PowResetPassword, PowEmailConfirmation],
   controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks
-
-# Configures the bamboo mailer
-config :food_delivery, FoodDelivery.Mailer,
-  adapter: Bamboo.SendGridAdapter,
-  api_key: "my_api_key"
 
 # Configures the endpoint
 config :food_delivery, FoodDeliveryWeb.Endpoint,

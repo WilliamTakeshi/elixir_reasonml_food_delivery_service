@@ -12,8 +12,8 @@ config :food_delivery, FoodDeliveryWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [],
-  front_end_reset_password_url: "http://localhost:3000/reset-password/{token}",
-  front_end_email_confirm_url: "http://localhost:3000/confirm-email/{token}"
+  front_end_reset_password_url: "http://localhost:8000/reset-password/{token}",
+  front_end_email_confirm_url: "http://localhost:8000/confirm-email/{token}"
 
 # ## SSL Support
 #
@@ -56,3 +56,8 @@ config :food_delivery, FoodDelivery.Repo,
   database: "food_delivery_dev",
   hostname: "localhost",
   pool_size: 10
+
+# Configure your mailer
+config :food_delivery, FoodDeliveryWeb.PowMailer,
+  adapter: Bamboo.SendGridAdapter,
+  api_key: "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"

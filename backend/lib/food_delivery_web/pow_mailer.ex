@@ -1,16 +1,21 @@
 defmodule FoodDeliveryWeb.PowMailer do
   use Pow.Phoenix.Mailer
+  use Bamboo.Mailer, otp_app: :food_delivery
   require Logger
 
-  def cast(%{user: user, subject: subject, text: text, html: html, assigns: _assigns}) do
-    # Build email struct to be used in `process/1`
+  import Bamboo.Email
 
-    %{to: user.email, subject: subject, text: text, html: html}
+  def cast(%{user: user, subject: subject, text: text, html: html}) do
+    new_email(
+      to: user.email,
+      from: "contact@fooddelivery.com",
+      subject: subject,
+      html_body: html,
+      text_body: text
+    )
   end
 
   def process(email) do
-    # Send email
-
-    Logger.debug("E-mail sent: #{inspect(email)}")
+    deliver_now(email)
   end
 end

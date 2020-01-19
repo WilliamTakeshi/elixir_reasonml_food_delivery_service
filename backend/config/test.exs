@@ -5,8 +5,8 @@ use Mix.Config
 config :food_delivery, FoodDeliveryWeb.Endpoint,
   http: [port: 4002],
   server: false,
-  front_end_reset_password_url: "http://localhost:3000/reset-password/{token}",
-  front_end_email_confirm_url: "http://localhost:3000/confirm-email/{token}"
+  front_end_reset_password_url: "http://localhost:8000/reset-password/{token}",
+  front_end_email_confirm_url: "http://localhost:8000/confirm-email/{token}"
 
 config :food_delivery, FoodDelivery.Mailer, adapter: Bamboo.TestAdapter
 

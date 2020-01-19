@@ -42,6 +42,16 @@ defmodule FoodDeliveryWeb do
     end
   end
 
+  def mailer_view do
+    quote do
+      use Phoenix.View,
+        root: "lib/food_delivery_web/templates",
+        namespace: FoodDeliveryWeb
+
+      use Phoenix.HTML
+    end
+  end
+
   def router do
     quote do
       use Phoenix.Router

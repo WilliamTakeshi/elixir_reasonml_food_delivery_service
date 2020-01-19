@@ -7,7 +7,7 @@ defmodule FoodDelivery.Menu.Restaurant do
       Enum.reduce(Map.from_struct(struct), %{}, fn
         {:__meta__, _}, acc -> acc
         {:__struct__, _}, acc -> acc
-        {k, %Ecto.Association.NotLoaded{}}, acc -> acc
+        {_k, %Ecto.Association.NotLoaded{}}, acc -> acc
         {k, v}, acc -> Map.put(acc, k, v)
       end)
       |> Jason.Encode.map(opts)
