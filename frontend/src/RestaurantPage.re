@@ -40,7 +40,7 @@ let make = (~id) => {
          restaurant.meals
          ->(
              Array.mapWithIndex((index, meal) =>
-               <div> {Utils.str(meal.name)} </div>
+               <MealCard key={string_of_int(meal.id)} index meal />
              )
            )
          ->React.array

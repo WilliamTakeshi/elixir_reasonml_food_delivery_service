@@ -47,52 +47,58 @@ let make = () => {
     dispatch(ResetState);
   };
 
-  <div className="auth-page">
-    <div className="container page">
-      <div className="row">
-        <div className="col-md-6 offset-md-3 col-xs-12">
-          <h1 className="text-xs-center"> {str("Login")} </h1>
-          <Link href="/createaccount">
-            {React.string("Need an account?")}
-          </Link>
-          <input
-            type_="text"
-            className="form-control form-control-lg"
-            placeholder="Email"
-            value={state.email}
-            onChange={evt =>
-              Utils.valueFromEvent(evt)->EmailUpdate |> dispatch
-            }
-          />
-          <input
-            type_="password"
-            className="form-control form-control-lg"
-            placeholder="Password"
-            value={state.password}
-            onChange={evt =>
-              Utils.valueFromEvent(evt)->PasswordUpdate |> dispatch
-            }
-          />
-          <button
-            onClick={_evt =>
-              handleSubmit(
-                Json.Encode.(
-                  object_([
-                    (
-                      "user",
-                      object_([
-                        ("email", string(state.email)),
-                        ("password", string(state.password)),
-                      ]),
-                    ),
-                  ])
-                ),
-              )
-            }
-            className="btn btn-lg btn-primary pull-xs-right">
-            {str("Sign in")}
-          </button>
-        </div>
+  <div className="container">
+    <div className="row">
+      <div className="input-field col s6 offset-s3">
+        <h1 className="text-xs-center"> {str("Login")} </h1>
+        <Link href="/createaccount">
+          {React.string("Need an account?")}
+        </Link>
+      </div>
+    </div>
+    <div className="row">
+      <div className="input-field col s6 offset-s3">
+        <input
+          id="email"
+          type_="text"
+          className="validate"
+          value={state.email}
+          onChange={evt => Utils.valueFromEvent(evt)->EmailUpdate |> dispatch}
+        />
+        <label htmlFor="email"> {Utils.str("E-mail")} </label>
+      </div>
+    </div>
+    <div className="row">
+      <div className="input-field col s6 offset-s3">
+        <input
+          id="password"
+          type_="password"
+          className="validate"
+          value={state.password}
+          onChange={evt =>
+            Utils.valueFromEvent(evt)->PasswordUpdate |> dispatch
+          }
+        />
+        <label htmlFor="password"> {Utils.str("Password")} </label>
+        <button
+          onClick={_evt =>
+            handleSubmit(
+              Json.Encode.(
+                object_([
+                  (
+                    "user",
+                    object_([
+                      ("email", string(state.email)),
+                      ("password", string(state.password)),
+                    ]),
+                  ),
+                ])
+              ),
+            )
+          }
+          className="btn btn-lg btn-primary pull-xs-right">
+          {str("Sign in")}
+        </button>
       </div>
     </div>
   </div>;
