@@ -1,10 +1,13 @@
 [@react.component]
 let make = (~meal: RestaurantData.meal, ~index: int, ()) => {
+  let (qty, setQty) = React.useState(() => "1");
+
   <div className="col s12 m4">
     <div className="card medium">
       <div className="card-image">
-        // <img src={meal.img_url} />
-         <span className="card-title"> {Utils.str(meal.name)} </span> </div>
+        <img src={meal.img_url} />
+        <span className="card-title"> {Utils.str(meal.name)} </span>
+      </div>
       <div className="card-content">
         <p> {Utils.str(meal.description)} </p>
       </div>
@@ -12,10 +15,10 @@ let make = (~meal: RestaurantData.meal, ~index: int, ()) => {
         <input
           type_="number"
           className="validate col s3"
-          // value={state.password}
-          // onChange={evt =>
-          // Utils.valueFromEvent(evt)->PasswordUpdate |> dispatch
-          // }
+          min=1
+          max="20"
+          value=qty
+          onChange={evt => setQty(ReactEvent.Form.target(evt)##value)}
         />
         <button
           className="btn waves-effect waves-light col s3 right"

@@ -11,6 +11,7 @@ type meal = {
   active: bool,
   id: int,
   description: string,
+  img_url: string,
   name: string,
   price: int,
   restaurant_id: int,
@@ -35,6 +36,7 @@ module Decode = {
       name: json |> field("name", string),
       price: json |> field("price", int),
       restaurant_id: json |> field("restaurant_id", int),
+      img_url: json |> field("img_url", string),
     };
   };
   let restaurant = (json): restaurant => {

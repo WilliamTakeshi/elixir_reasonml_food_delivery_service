@@ -16,7 +16,8 @@ defmodule FoodDelivery.Menu.Meal do
 
   schema "meals" do
     field(:active, :boolean, default: true)
-    field(:description, :string)
+    field(:description, :string, default: "")
+    field(:img_url, :string, default: "")
     field(:name, :string)
     field(:price, :integer)
     belongs_to(:restaurant, FoodDelivery.Menu.Restaurant)
@@ -27,7 +28,7 @@ defmodule FoodDelivery.Menu.Meal do
   end
 
   @required ~w(name price active restaurant_id)a
-  @optional ~w(description)a
+  @optional ~w(description img_url)a
 
   @doc false
   def changeset(meal, attrs) do
