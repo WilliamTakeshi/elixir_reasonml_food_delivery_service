@@ -12,7 +12,7 @@ defmodule FoodDeliveryWeb.OrderController do
   end
 
   def create(conn, %{"order" => order_params}) do
-    with {:ok, %Order{} = order} <- Cart.create_order(order_params) do
+    with {:ok, %{order: %Order{} = order}} <- Cart.create_order(order_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.order_path(conn, :show, order))

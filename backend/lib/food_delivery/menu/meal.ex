@@ -22,7 +22,7 @@ defmodule FoodDelivery.Menu.Meal do
     field(:price, :integer)
     belongs_to(:restaurant, FoodDelivery.Menu.Restaurant)
 
-    many_to_many(:orders, FoodDelivery.Cart.Order, join_through: FoodDelivery.Cart.OrderMeal)
+    has_many(:orders_meals, FoodDelivery.Cart.OrderMeal)
 
     timestamps()
   end

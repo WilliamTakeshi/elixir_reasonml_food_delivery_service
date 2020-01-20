@@ -18,7 +18,7 @@ defmodule FoodDelivery.Cart.Order do
     field(:status, :string, default: "not_placed")
     belongs_to(:restaurant, FoodDelivery.Menu.Restaurant)
     belongs_to(:user, FoodDelivery.Users)
-    many_to_many(:meals, FoodDelivery.Menu.Meal, join_through: FoodDelivery.Cart.OrderMeal)
+    has_many(:orders_meals, FoodDelivery.Cart.OrderMeal)
 
     field(:placed_date, :utc_datetime)
     field(:canceled_date, :utc_datetime)
@@ -31,7 +31,6 @@ defmodule FoodDelivery.Cart.Order do
 
   @required ~w(restaurant_id user_id)a
   @optional ~w()a
-  # status placed_date canceled_date processing_date in_route_date delivered_date received_date
   @doc false
   def changeset(order, attrs) do
     order
@@ -39,10 +38,12 @@ defmodule FoodDelivery.Cart.Order do
     |> validate_required(@required)
   end
 
+  @required_change_status ~w(status)a
+  @optional_change_status ~w(placed_date canceled_date processing_date in_route_date delivered_date received_date)a
   defp do_change_status(order, attrs) do
     order
-    |> cast(attrs, [:status])
-    |> validate_required([:status])
+    |> cast(attrs, @required_change_status ++ @optional_change_status)
+    |> validate_required(@required_change_status)
     |> validate_inclusion(
       :status,
       ~w(not_placed placed canceled processing in_route delivered received)
@@ -50,24 +51,26 @@ defmodule FoodDelivery.Cart.Order do
   end
 
   def change_status(order, status) do
+    {:ok, datetime} = DateTime.now("Etc/UTC")
+
     case {order.status, status} do
       {"not_placed", "placed"} ->
-        do_change_status(order, %{"status" => "placed"})
+        do_change_status(order, %{"status" => "placed", "placed_date" => datetime})
 
       {"placed", "canceled"} ->
-        do_change_status(order, %{"status" => "canceled"})
+        do_change_status(order, %{"status" => "canceled", "canceled_date" => datetime})
 
       {"placed", "processing"} ->
-        do_change_status(order, %{"status" => "processing"})
+        do_change_status(order, %{"status" => "processing", "processing_date" => datetime})
 
       {"processing", "in_route"} ->
-        do_change_status(order, %{"status" => "in_route"})
+        do_change_status(order, %{"status" => "in_route", "in_route_date" => datetime})
 
       {"in_route", "delivered"} ->
-        do_change_status(order, %{"status" => "delivered"})
+        do_change_status(order, %{"status" => "delivered", "delivered_date" => datetime})
 
       {"delivered", "received"} ->
-        do_change_status(order, %{"status" => "received"})
+        do_change_status(order, %{"status" => "received", "received_date" => datetime})
 
       {before, after_} ->
         order

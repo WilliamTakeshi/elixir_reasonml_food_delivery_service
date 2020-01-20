@@ -141,7 +141,11 @@ defmodule FoodDelivery.Menu do
 
   """
   def list_meals do
-    Repo.all(Meal)
+    Repo.all(
+      from(m in Meal,
+        order_by: [m.name, m.id]
+      )
+    )
   end
 
   @doc """

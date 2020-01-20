@@ -6,7 +6,10 @@ defmodule FoodDelivery.Cart do
   import Ecto.Query, warn: false
   alias FoodDelivery.Repo
 
-  alias FoodDelivery.Cart.Order
+  alias FoodDelivery.Cart.{
+    Order,
+    OrderMeal
+  }
 
   @doc """
   Returns the list of orders.
@@ -55,9 +58,23 @@ defmodule FoodDelivery.Cart do
 
   """
   def create_order(attrs \\ %{}) do
-    %Order{}
-    |> Order.changeset(attrs)
-    |> Repo.insert()
+    order =
+      %Order{}
+      |> Order.changeset(attrs)
+
+    multi =
+      Ecto.Multi.new()
+      |> Ecto.Multi.insert(:order, order)
+
+    attrs
+    |> Map.get("orders_meals", [])
+    |> Enum.reduce(
+      multi,
+      &Ecto.Multi.insert(&2, {:orders_meals, Map.get(&1, "meal_id")}, fn %{order: o} ->
+        OrderMeal.changeset(Ecto.build_assoc(o, :orders_meals), &1)
+      end)
+    )
+    |> Repo.transaction()
   end
 
   @doc """

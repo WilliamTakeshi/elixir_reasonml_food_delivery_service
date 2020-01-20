@@ -4,15 +4,18 @@ defmodule FoodDelivery.Cart.OrderMeal do
 
   schema "orders_meals" do
     belongs_to(:order, FoodDelivery.Cart.Order)
-    belongs_to(:meal, Meal)
+    belongs_to(:meal, FoodDelivery.Menu.Meal)
+    field(:qty, :integer)
 
     timestamps()
   end
 
+  @required ~w(order_id meal_id qty)a
+  @optional ~w()a
   @doc false
   def changeset(order_meal, attrs) do
     order_meal
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, @required ++ @optional)
+    |> validate_required(@required)
   end
 end
