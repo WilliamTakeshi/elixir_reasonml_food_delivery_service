@@ -38,7 +38,8 @@ defmodule FoodDelivery.Menu do
   """
   def get_restaurant_with_meals(id) do
     Repo.all(
-      from(r in Restaurant,
+      from(
+        r in Restaurant,
         preload: :meals,
         where: r.id == ^id
       )

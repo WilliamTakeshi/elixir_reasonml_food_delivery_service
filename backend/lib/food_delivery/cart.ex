@@ -21,7 +21,11 @@ defmodule FoodDelivery.Cart do
 
   """
   def list_orders do
-    Repo.all(Order)
+    Repo.all(
+      from(o in Order,
+        preload: [orders_meals: :meal]
+      )
+    )
   end
 
   @doc """
