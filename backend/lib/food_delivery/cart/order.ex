@@ -51,13 +51,28 @@ defmodule FoodDelivery.Cart.Order do
 
   def change_status(order, status) do
     case {order.status, status} do
-      {"not_placed", "placed"} -> do_change_status(order, %{"status" => "placed"})
-      {"placed", "canceled"} -> do_change_status(order, %{"status" => "canceled"})
-      {"placed", "processing"} -> do_change_status(order, %{"status" => "processing"})
-      {"processing", "in_route"} -> do_change_status(order, %{"status" => "in_route"})
-      {"in_route", "delivered"} -> do_change_status(order, %{"status" => "delivered"})
-      {"delivered", "received"} -> do_change_status(order, %{"status" => "received"})
-      {_, _} -> cast(order, %{}, [])
+      {"not_placed", "placed"} ->
+        do_change_status(order, %{"status" => "placed"})
+
+      {"placed", "canceled"} ->
+        do_change_status(order, %{"status" => "canceled"})
+
+      {"placed", "processing"} ->
+        do_change_status(order, %{"status" => "processing"})
+
+      {"processing", "in_route"} ->
+        do_change_status(order, %{"status" => "in_route"})
+
+      {"in_route", "delivered"} ->
+        do_change_status(order, %{"status" => "delivered"})
+
+      {"delivered", "received"} ->
+        do_change_status(order, %{"status" => "received"})
+
+      {before, after_} ->
+        order
+        |> cast(%{}, [])
+        |> add_error(:status, "cannot change status from #{before} to #{after_}")
     end
   end
 end

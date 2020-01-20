@@ -3,7 +3,6 @@
     add error handler
  */
 
-let str = ReasonReact.string;
 type state = {
   email: string,
   password: string,
@@ -51,10 +50,8 @@ let make = () => {
   <div className="container">
     <div className="row">
       <div className="input-field col s6 offset-s3">
-        <h1 className="text-xs-center"> {str("Login")} </h1>
-        <Link href="/createaccount">
-          {React.string("Need an account?")}
-        </Link>
+        <h1 className="text-xs-center"> {Utils.str("Login")} </h1>
+        <Link href="/createaccount"> {Utils.str("Need an account?")} </Link>
       </div>
     </div>
     <div className="row">
@@ -98,7 +95,7 @@ let make = () => {
             )
           }
           className="btn btn-lg btn-primary pull-xs-right">
-          {str("Login")}
+          {Utils.str("Login")}
         </button>
       </div>
     </div>

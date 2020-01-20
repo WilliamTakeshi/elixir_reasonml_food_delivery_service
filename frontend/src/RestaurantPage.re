@@ -14,6 +14,13 @@ let reducer = (state, action) =>
   | Loaded(restaurant_with_meal) => restaurant_with_meal
   };
 
+module Styles = {
+  /* Open the Css module, so we can access the style properties below without prefixing them with Css. */
+  open Css;
+
+  let sticky_bottom = style([position(sticky), bottom(px(16))]);
+};
+
 [@react.component]
 let make = (~id) => {
   let (state, dispatch) =
@@ -32,7 +39,7 @@ let make = (~id) => {
     |> ignore;
     None;
   });
-  <div>
+  <div className="container">
     <div className="row">
       {switch (state.restaurant_with_meal) {
        | None => ReasonReact.null
@@ -45,6 +52,14 @@ let make = (~id) => {
            )
          ->React.array
        }}
+    </div>
+    <div className=Styles.sticky_bottom>
+      <div className="center">
+        <button
+          onClick=Js.log className="btn btn-lg btn-primary pull-xs-right">
+          {Utils.str("Order")}
+        </button>
+      </div>
     </div>
   </div>;
 };

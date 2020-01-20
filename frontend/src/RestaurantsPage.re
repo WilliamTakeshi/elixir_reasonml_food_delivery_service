@@ -26,7 +26,7 @@ let make = () => {
     |> ignore;
     None;
   });
-  <div>
+  <div className="container">
     <div className="row">
       {if (Array.length(state.restaurants) > 0) {
          state.restaurants
