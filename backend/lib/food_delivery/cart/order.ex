@@ -29,7 +29,7 @@ defmodule FoodDelivery.Cart.Order do
     timestamps()
   end
 
-  @required ~w(restaurant_id user_id status)a
+  @required ~w(restaurant_id user_id)a
   @optional ~w()a
   # status placed_date canceled_date processing_date in_route_date delivered_date received_date
   @doc false
@@ -37,10 +37,6 @@ defmodule FoodDelivery.Cart.Order do
     order
     |> cast(attrs, @required ++ @optional)
     |> validate_required(@required)
-    |> validate_inclusion(
-      :status,
-      ~w(not_placed placed canceled processing in_route delivered received)
-    )
   end
 
   defp do_change_status(order, attrs) do
@@ -53,9 +49,15 @@ defmodule FoodDelivery.Cart.Order do
     )
   end
 
-  defp change_status(order, status) do
+  def change_status(order, status) do
     case {order.status, status} do
-      {st, sta} -> IO.inspect(st)
+      {"not_placed", "placed"} -> do_change_status(order, %{"status" => "placed"})
+      {"placed", "canceled"} -> do_change_status(order, %{"status" => "canceled"})
+      {"placed", "processing"} -> do_change_status(order, %{"status" => "processing"})
+      {"processing", "in_route"} -> do_change_status(order, %{"status" => "in_route"})
+      {"in_route", "delivered"} -> do_change_status(order, %{"status" => "delivered"})
+      {"delivered", "received"} -> do_change_status(order, %{"status" => "received"})
+      {_, _} -> cast(order, %{}, [])
     end
   end
 end
