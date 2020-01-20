@@ -31,6 +31,7 @@ defmodule FoodDeliveryWeb.Router do
     end
 
     resources("/orders", OrderController, except: [:new, :edit])
+    post("/orders/:id/:status", OrderController, :change_status)
 
     # Your protected API endpoints here
   end

@@ -11,6 +11,6 @@ defmodule FoodDeliveryWeb.OrderView do
   end
 
   def render("order.json", %{order: order}) do
-    %{id: order.id, status: order.status, date: order.date}
+    order
   end
 end

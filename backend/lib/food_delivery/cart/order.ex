@@ -2,10 +2,23 @@ defmodule FoodDelivery.Cart.Order do
   use Ecto.Schema
   import Ecto.Changeset
 
+  defimpl Jason.Encoder, for: [FoodDelivery.Cart.Order] do
+    def encode(struct, opts) do
+      Enum.reduce(Map.from_struct(struct), %{}, fn
+        {:__meta__, _}, acc -> acc
+        {:__struct__, _}, acc -> acc
+        {_, %Ecto.Association.NotLoaded{}}, acc -> acc
+        {k, v}, acc -> Map.put(acc, k, v)
+      end)
+      |> Jason.Encode.map(opts)
+    end
+  end
+
   schema "orders" do
     field(:status, :string, default: "not_placed")
-    belongs_to(:restaurant, Restaurant)
-    many_to_many(:meals, Meal, join_through: OrderMeal)
+    belongs_to(:restaurant, FoodDelivery.Menu.Restaurant)
+    belongs_to(:user, FoodDelivery.Users)
+    many_to_many(:meals, FoodDelivery.Menu.Meal, join_through: FoodDelivery.Cart.OrderMeal)
 
     field(:placed_date, :utc_datetime)
     field(:canceled_date, :utc_datetime)
@@ -16,8 +29,9 @@ defmodule FoodDelivery.Cart.Order do
     timestamps()
   end
 
-  @required ~w(restaurant_id user_id)a
-  @optional ~w(status placed_date canceled_date processing_date in_route_date delivered_date received_date)a
+  @required ~w(restaurant_id user_id status)a
+  @optional ~w()a
+  # status placed_date canceled_date processing_date in_route_date delivered_date received_date
   @doc false
   def changeset(order, attrs) do
     order
@@ -27,5 +41,21 @@ defmodule FoodDelivery.Cart.Order do
       :status,
       ~w(not_placed placed canceled processing in_route delivered received)
     )
+  end
+
+  defp do_change_status(order, attrs) do
+    order
+    |> cast(attrs, [:status])
+    |> validate_required([:status])
+    |> validate_inclusion(
+      :status,
+      ~w(not_placed placed canceled processing in_route delivered received)
+    )
+  end
+
+  defp change_status(order, status) do
+    case {order.status, status} do
+      {st, sta} -> IO.inspect(st)
+    end
   end
 end

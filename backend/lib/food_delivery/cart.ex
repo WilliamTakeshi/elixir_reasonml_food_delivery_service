@@ -24,7 +24,7 @@ defmodule FoodDelivery.Cart do
   @doc """
   Gets a single order.
 
-  Raises `Ecto.NoResultsError` if the Order does not exist.
+  Returns {:error, :not_found} if the Order does not exist.
 
   ## Examples
 
@@ -32,10 +32,15 @@ defmodule FoodDelivery.Cart do
       %Order{}
 
       iex> get_order!(456)
-      ** (Ecto.NoResultsError)
+      {:error, :not_found}
 
   """
-  def get_order!(id), do: Repo.get!(Order, id)
+  def get_order(id) do
+    case Repo.get(Order, id) do
+      nil -> {:error, :not_found}
+      order -> {:ok, order}
+    end
+  end
 
   @doc """
   Creates a order.
@@ -100,5 +105,20 @@ defmodule FoodDelivery.Cart do
   """
   def change_order(%Order{} = order) do
     Order.changeset(order, %{})
+  end
+
+  @doc """
+  Updates an order status.
+
+  ## Examples
+
+      iex> change_status(order)
+      {:ok, %Order{}}
+
+  """
+  def change_status(%Order{} = order, status) do
+    order
+    |> Order.change_status(status)
+    |> Repo.update()
   end
 end
