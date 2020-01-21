@@ -61,23 +61,37 @@ defmodule FoodDelivery.Cart do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_order(attrs \\ %{}) do
-    order =
-      %Order{}
-      |> Order.changeset(attrs)
+  def create_or_update_meal_order(%{"meal_id" => meal_id, "qty" => qty}) do
+    # FIX: Fix user id
+    meal = Repo.get!(FoodDelivery.Menu.Meal, meal_id)
 
-    multi =
-      Ecto.Multi.new()
-      |> Ecto.Multi.insert(:order, order)
-
-    attrs
-    |> Map.get("orders_meals", [])
-    |> Enum.reduce(
-      multi,
-      &Ecto.Multi.insert(&2, {:orders_meals, Map.get(&1, "meal_id")}, fn %{order: o} ->
-        OrderMeal.changeset(Ecto.build_assoc(o, :orders_meals), &1)
-      end)
-    )
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:order, fn repo, _changes ->
+      {:ok,
+       repo.one(
+         from(
+           o in Order,
+           where:
+             o.restaurant_id == ^meal.restaurant_id and o.user_id == ^1 and
+               o.status == ^"not_placed"
+         )
+       ) || %Order{}}
+    end)
+    |> Ecto.Multi.insert_or_update(:updated_order, fn %{order: order} ->
+      Ecto.Changeset.change(order, %{restaurant_id: meal.restaurant_id, user_id: 1})
+    end)
+    |> Ecto.Multi.run(:order_meal, fn repo, %{updated_order: updated_order} ->
+      {:ok,
+       repo.one(
+         from(
+           om in OrderMeal,
+           where: om.meal_id == ^meal_id and om.order_id == ^updated_order.id
+         )
+       ) || Ecto.build_assoc(updated_order, :orders_meals)}
+    end)
+    |> Ecto.Multi.insert_or_update(:updated_order_meal, fn %{order_meal: order_meal} ->
+      OrderMeal.changeset(order_meal, %{meal_id: meal_id, qty: qty + (order_meal.qty || 0)})
+    end)
     |> Repo.transaction()
   end
 
