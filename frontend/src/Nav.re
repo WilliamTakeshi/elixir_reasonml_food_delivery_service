@@ -9,7 +9,7 @@ let make = () => {
         <li>
           <Link href="/restaurants"> {Utils.str("Restaurants")} </Link>
         </li>
-        <li> <Link href="/orders"> {Utils.str("Shopping Cart")} </Link> </li>
+        <li> <Link href="/orders"> {Utils.str("Orders")} </Link> </li>
       </ul>
     </div>
   </nav>;

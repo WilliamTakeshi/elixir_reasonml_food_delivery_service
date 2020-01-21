@@ -17,8 +17,9 @@ let make = () => {
      | ([], true)
      | (["restaurants"], true) => <RestaurantsPage />
      | (["login"], false) => <LoginPage />
-     | (["confirm_email", token], _) => <ConfirmEmail token />
-     | (["createaccount"], true) => <CreateAccountPage />
+     | (["createaccount"], false) => <CreateAccountPage />
+     | (["confirm_email", token], _) => <ConfirmEmailPage token />
+     | (["orders"], true) => <OrdersPage />
      | (["restaurants", id], true) =>
        <RestaurantPage id={int_of_string(id)} />
      | (_, _) => <NotFoundPage />

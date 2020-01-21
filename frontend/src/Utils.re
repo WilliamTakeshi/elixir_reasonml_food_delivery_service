@@ -37,3 +37,9 @@ external registerServiceWorker: unit => unit = "src/registerServiceWorker";
 let valueFromEvent = (evt): string => evt->ReactEvent.Form.target##value;
 
 let str = ReasonReact.string;
+
+let toMoneyFormat = (value: int): string => {
+  let dollar = value / 100;
+  let cents = value mod 100;
+  {j|US\$ $dollar.$cents|j};
+};
