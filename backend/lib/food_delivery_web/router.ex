@@ -23,8 +23,8 @@ defmodule FoodDeliveryWeb.Router do
   end
 
   scope "/api/v1", FoodDeliveryWeb do
-    pipe_through([:api])
-    # pipe_through([:api, :api_protected])
+    # pipe_through([:api])
+    pipe_through([:api, :api_protected])
 
     resources("/restaurants", RestaurantController, except: [:new, :edit]) do
       resources("/meals", MealController, except: [:new, :edit])

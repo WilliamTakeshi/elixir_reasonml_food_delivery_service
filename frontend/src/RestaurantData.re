@@ -65,7 +65,17 @@ module Decode = {
 let fetchRestaurants = callback => {
   Js.Promise.
     (
-      Fetch.fetch({j|$apiBaseUrl/api/v1/restaurants|j})
+      Fetch.fetchWithInit(
+        {j|$apiBaseUrl/api/v1/restaurants|j},
+        Fetch.RequestInit.make(
+          ~method_=Get,
+          ~headers=
+            Fetch.HeadersInit.make({
+              "Authorization": AuthData.getTokenFromStorage(),
+            }),
+          (),
+        ),
+      )
       |> then_(Fetch.Response.json)
       |> then_(json => {
            json
@@ -84,7 +94,17 @@ let fetchRestaurants = callback => {
 let fetchRestaurantWithMeal = (id, callback) => {
   let strId = string_of_int(id);
   Js.Promise.(
-    Fetch.fetch({j|$apiBaseUrl/api/v1/restaurants/$strId|j})
+    Fetch.fetchWithInit(
+      {j|$apiBaseUrl/api/v1/restaurants/$strId|j},
+      Fetch.RequestInit.make(
+        ~method_=Get,
+        ~headers=
+          Fetch.HeadersInit.make({
+            "Authorization": AuthData.getTokenFromStorage(),
+          }),
+        (),
+      ),
+    )
     |> then_(Fetch.Response.json)
     |> then_(json =>
          json

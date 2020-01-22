@@ -67,7 +67,17 @@ module Decode = {
 let fetchOrders = callback => {
   Js.Promise.
     (
-      Fetch.fetch({j|$apiBaseUrl/api/v1/orders|j})
+      Fetch.fetchWithInit(
+        {j|$apiBaseUrl/api/v1/orders|j},
+        Fetch.RequestInit.make(
+          ~method_=Get,
+          ~headers=
+            Fetch.HeadersInit.make({
+              "Authorization": AuthData.getTokenFromStorage(),
+            }),
+          (),
+        ),
+      )
       |> then_(Fetch.Response.json)
       |> then_(json => {
            json
@@ -92,7 +102,10 @@ let postOrder = body => {
           ~method_=Post,
           ~body=Fetch.BodyInit.make(Js.Json.stringify(body)),
           ~headers=
-            Fetch.HeadersInit.make({"Content-Type": "application/json"}),
+            Fetch.HeadersInit.make({
+              "Content-Type": "application/json",
+              "Authorization": AuthData.getTokenFromStorage(),
+            }),
           (),
         ),
       )
