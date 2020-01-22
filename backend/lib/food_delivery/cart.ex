@@ -5,6 +5,7 @@ defmodule FoodDelivery.Cart do
 
   import Ecto.Query, warn: false
   alias FoodDelivery.Repo
+  alias FoodDelivery.Users.User
 
   alias FoodDelivery.Cart.{
     Order,
@@ -12,18 +13,26 @@ defmodule FoodDelivery.Cart do
   }
 
   @doc """
-  Returns the list of orders.
-
-  ## Examples
-
-      iex> list_orders()
-      [%Order{}, ...]
-
+  Returns the list of user orders.
   """
-  def list_orders do
+  def list_orders(%User{role: "user"} = user) do
     Repo.all(
       from(o in Order,
-        preload: [orders_meals: :meal]
+        preload: [orders_meals: :meal],
+        where: o.user_id == ^user.id
+      )
+    )
+  end
+
+  @doc """
+  Returns the list of restaurant orders.
+  """
+  def list_orders(%User{role: "owner"} = user) do
+    Repo.all(
+      from(o in Order,
+        join: r in assoc(o, :restaurant),
+        preload: [orders_meals: :meal],
+        where: r.owner_id == ^user.id
       )
     )
   end
@@ -45,7 +54,7 @@ defmodule FoodDelivery.Cart do
   def get_order(id) do
     case Repo.one(
            from(o in Order,
-             preload: [orders_meals: :meal],
+             preload: [:restaurant, orders_meals: :meal],
              where: o.id == ^id
            )
          ) do

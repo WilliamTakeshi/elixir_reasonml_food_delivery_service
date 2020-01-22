@@ -43,7 +43,8 @@ defmodule FoodDelivery.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:pow, "~> 1.0.16"},
       {:bamboo, "~> 1.3"},
-      {:cors_plug, "~> 2.0"}
+      {:cors_plug, "~> 2.0"},
+      {:bodyguard, "~> 2.4"}
     ]
   end
 
