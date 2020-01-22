@@ -43,7 +43,12 @@ defmodule FoodDelivery.Cart do
 
   """
   def get_order(id) do
-    case Repo.get(Order, id) do
+    case Repo.one(
+           from(o in Order,
+             preload: [orders_meals: :meal],
+             where: o.id == ^id
+           )
+         ) do
       nil -> {:error, :not_found}
       order -> {:ok, order}
     end

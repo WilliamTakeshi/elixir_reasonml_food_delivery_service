@@ -21,16 +21,13 @@ type order = {
   restaurant_id: int,
   status: string,
   user_id: int,
-  orders_meals: array(order_meal),
+  orders_meals: option(array(order_meal)),
 };
 
 type orders = array(order);
 
 module Decode = {
   let order_meal = (json): order_meal => {
-    Js.log("order_meal");
-    Js.log(json);
-
     Json.Decode.{
       id: json |> field("id", int),
       meal: json |> field("meal", RestaurantData.Decode.meal),
@@ -42,26 +39,29 @@ module Decode = {
     };
   };
   let order = (json): order => {
-    Js.log("order");
-
-    Json.Decode.{
-      canceled_date: json |> optional(field("canceled_date", date)),
-      delivered_date: json |> optional(field("delivered_date", date)),
-      in_route_date: json |> optional(field("in_route_date", date)),
-      inserted_at: json |> optional(field("inserted_at", date)),
-      updated_at: json |> optional(field("updated_at", date)),
-      placed_date: json |> optional(field("placed_date", date)),
-      processing_date: json |> optional(field("processing_date", date)),
-      received_date: json |> optional(field("received_date", date)),
-      restaurant_id: json |> field("restaurant_id", int),
-      status: json |> field("status", string),
-      user_id: json |> field("user_id", int),
-      orders_meals: json |> field("orders_meals", array(order_meal)),
-    };
+    Js.log(json);
+    let a =
+      Json.Decode.{
+        canceled_date: json |> optional(field("canceled_date", date)),
+        delivered_date: json |> optional(field("delivered_date", date)),
+        in_route_date: json |> optional(field("in_route_date", date)),
+        inserted_at: json |> optional(field("inserted_at", date)),
+        updated_at: json |> optional(field("updated_at", date)),
+        placed_date: json |> optional(field("placed_date", date)),
+        processing_date: json |> optional(field("processing_date", date)),
+        received_date: json |> optional(field("received_date", date)),
+        restaurant_id: json |> field("restaurant_id", int),
+        status: json |> field("status", string),
+        user_id: json |> field("user_id", int),
+        id: json |> field("id", int),
+        orders_meals:
+          json |> optional(field("orders_meals", array(order_meal))),
+      };
+    Js.log(a);
+    a;
   };
 
   let orders = (json): orders => {
-    Js.log("orders");
     Json.Decode.(json |> array(order));
   };
 };
@@ -72,7 +72,6 @@ let fetchOrders = callback => {
       Fetch.fetch({j|$apiBaseUrl/api/v1/orders|j})
       |> then_(Fetch.Response.json)
       |> then_(json => {
-           Js.log(json);
            json
            |> Json.Decode.(at(["data"], Decode.orders))
            |> (
@@ -80,7 +79,35 @@ let fetchOrders = callback => {
                callback(orders);
                resolve();
              }
-           );
+           )
+         })
+      |> ignore
+    ); /* TODO: error handling */
+};
+
+let postOrder = body => {
+  Js.Promise.
+    (
+      Fetch.fetchWithInit(
+        {j|$apiBaseUrl/api/v1/orders|j},
+        Fetch.RequestInit.make(
+          ~method_=Post,
+          ~body=Fetch.BodyInit.make(Js.Json.stringify(body)),
+          ~headers=
+            Fetch.HeadersInit.make({"Content-Type": "application/json"}),
+          (),
+        ),
+      )
+      |> then_(Fetch.Response.json)
+      |> then_(json => {
+           json
+           |> Json.Decode.(at(["data"], Decode.order))
+           |> (
+             orders => {
+               Js.log(orders);
+               resolve();
+             }
+           )
          })
       |> ignore
     ); /* TODO: error handling */

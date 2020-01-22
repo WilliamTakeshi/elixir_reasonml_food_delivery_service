@@ -1,6 +1,11 @@
 [@react.component]
-let make = (~meal: RestaurantData.meal, ~index: int, ()) => {
+let make = (~meal: RestaurantData.meal, ()) => {
   let (qty, setQty) = React.useState(() => "0");
+
+  let handleSubmit = state => {
+    OrderData.postOrder(state);
+    setQty(_ => "0");
+  };
 
   <div className="col s12 m4">
     <div className="card medium">
@@ -12,14 +17,37 @@ let make = (~meal: RestaurantData.meal, ~index: int, ()) => {
         <p> {Utils.str(meal.description)} </p>
       </div>
       <div className="card-action">
-        <input
-          type_="number"
-          className="validate col s4 offset-s4"
-          min=0
-          max="20"
-          value=qty
-          onChange={evt => setQty(ReactEvent.Form.target(evt)##value)}
-        />
+        <div className="center">
+          <input
+            type_="number"
+            className="validate col s4 offset-s4"
+            min=0
+            max="20"
+            value=qty
+            onChange={evt => setQty(ReactEvent.Form.target(evt)##value)}
+          />
+        </div>
+        <div className="center">
+          <button
+            onClick={_ =>
+              handleSubmit(
+                Json.Encode.(
+                  object_([
+                    (
+                      "order_meal",
+                      object_([
+                        ("meal_id", int(meal.id)),
+                        ("qty", int(int_of_string(qty))),
+                      ]),
+                    ),
+                  ])
+                ),
+              )
+            }
+            className="btn btn-lg btn-primary pull-xs-right">
+            {Utils.str("Order")}
+          </button>
+        </div>
       </div>
     </div>
   </div>;

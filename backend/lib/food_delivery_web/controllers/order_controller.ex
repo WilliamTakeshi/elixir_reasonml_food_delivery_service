@@ -15,7 +15,6 @@ defmodule FoodDeliveryWeb.OrderController do
     with {:ok, %{updated_order: %Order{} = order}} <-
            Cart.create_or_update_meal_order(order_meal_params) do
       conn
-      |> put_status(:created)
       |> put_resp_header("location", Routes.order_path(conn, :show, order))
       |> render("show.json", order: order)
     end
