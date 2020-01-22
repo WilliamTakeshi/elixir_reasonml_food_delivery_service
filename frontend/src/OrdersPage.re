@@ -39,9 +39,13 @@ let makeTable = (order: OrderData.order) => {
         </tr>
       </thead>
       <tbody>
-        {order.orders_meals
-         ->(Array.map(ord_meal => makeLine(ord_meal)))
-         ->React.array}
+        {switch (order.orders_meals) {
+         | None => ReasonReact.null
+         | Some(orders_meals) =>
+           orders_meals
+           ->(Array.map(ord_meal => makeLine(ord_meal)))
+           ->React.array
+         }}
       </tbody>
     </table>
   </div>;

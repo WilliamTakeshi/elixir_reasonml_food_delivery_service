@@ -1,4 +1,5 @@
 let apiBaseUrl = "http://localhost:4000";
+
 type order_meal = {
   id: int,
   meal: RestaurantData.meal,
@@ -10,6 +11,7 @@ type order_meal = {
 };
 
 type order = {
+  id: int,
   canceled_date: option(Js.Date.t),
   delivered_date: option(Js.Date.t),
   in_route_date: option(Js.Date.t),
@@ -39,26 +41,22 @@ module Decode = {
     };
   };
   let order = (json): order => {
-    Js.log(json);
-    let a =
-      Json.Decode.{
-        canceled_date: json |> optional(field("canceled_date", date)),
-        delivered_date: json |> optional(field("delivered_date", date)),
-        in_route_date: json |> optional(field("in_route_date", date)),
-        inserted_at: json |> optional(field("inserted_at", date)),
-        updated_at: json |> optional(field("updated_at", date)),
-        placed_date: json |> optional(field("placed_date", date)),
-        processing_date: json |> optional(field("processing_date", date)),
-        received_date: json |> optional(field("received_date", date)),
-        restaurant_id: json |> field("restaurant_id", int),
-        status: json |> field("status", string),
-        user_id: json |> field("user_id", int),
-        id: json |> field("id", int),
-        orders_meals:
-          json |> optional(field("orders_meals", array(order_meal))),
-      };
-    Js.log(a);
-    a;
+    Json.Decode.{
+      canceled_date: json |> optional(field("canceled_date", date)),
+      delivered_date: json |> optional(field("delivered_date", date)),
+      in_route_date: json |> optional(field("in_route_date", date)),
+      inserted_at: json |> optional(field("inserted_at", date)),
+      updated_at: json |> optional(field("updated_at", date)),
+      placed_date: json |> optional(field("placed_date", date)),
+      processing_date: json |> optional(field("processing_date", date)),
+      received_date: json |> optional(field("received_date", date)),
+      restaurant_id: json |> field("restaurant_id", int),
+      status: json |> field("status", string),
+      user_id: json |> field("user_id", int),
+      id: json |> field("id", int),
+      orders_meals:
+        json |> optional(field("orders_meals", array(order_meal))),
+    };
   };
 
   let orders = (json): orders => {
@@ -104,7 +102,6 @@ let postOrder = body => {
            |> Json.Decode.(at(["data"], Decode.order))
            |> (
              orders => {
-               Js.log(orders);
                resolve();
              }
            )
