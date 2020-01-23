@@ -4,7 +4,7 @@ defmodule FoodDelivery.Policy do
   alias FoodDelivery.Users.User
 
   # Admin users can do anything
-  def authorize(_, %User{role: :admin}, _), do: :ok
+  def authorize(_, %User{role: "admin"}, _), do: :ok
 
   # ---------------- Order controller ----------------
 
