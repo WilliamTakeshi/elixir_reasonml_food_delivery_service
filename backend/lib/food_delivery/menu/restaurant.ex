@@ -16,8 +16,8 @@ defmodule FoodDelivery.Menu.Restaurant do
 
   schema "restaurants" do
     field(:name, :string)
-    field(:description, :string, default: "")
-    field(:img_url, :string, default: "")
+    field(:description, :string, default: "", size: 2047)
+    field(:img_url, :string, default: "", size: 2047)
     belongs_to(:user, User, foreign_key: :owner_id)
     has_many(:meals, FoodDelivery.Menu.Meal)
     has_many(:orders, FoodDelivery.Cart.Order)
@@ -25,7 +25,7 @@ defmodule FoodDelivery.Menu.Restaurant do
     timestamps()
   end
 
-  @required ~w(name)a
+  @required ~w(name owner_id)a
   @optional ~w(description img_url)a
   @doc false
   def changeset(restaurant, attrs) do

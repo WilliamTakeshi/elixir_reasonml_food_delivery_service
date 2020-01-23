@@ -16,8 +16,8 @@ defmodule FoodDelivery.Menu.Meal do
 
   schema "meals" do
     field(:active, :boolean, default: true)
-    field(:description, :string, default: "")
-    field(:img_url, :string, default: "")
+    field(:description, :string, default: "", size: 2047)
+    field(:img_url, :string, default: "", size: 2047)
     field(:name, :string)
     field(:price, :integer)
     belongs_to(:restaurant, FoodDelivery.Menu.Restaurant)
