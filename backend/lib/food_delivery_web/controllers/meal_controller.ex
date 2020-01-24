@@ -13,7 +13,6 @@ defmodule FoodDeliveryWeb.MealController do
 
   def create(conn, %{"meal" => meal_params, "restaurant_id" => restaurant_id}) do
     user = Pow.Plug.current_user(conn)
-
     meal_params = Map.put(meal_params, "restaurant_id", restaurant_id)
 
     with {:ok, restaurant} <- Menu.get_restaurant(restaurant_id),
@@ -37,6 +36,7 @@ defmodule FoodDeliveryWeb.MealController do
 
   def update(conn, %{"id" => id, "meal" => meal_params, "restaurant_id" => restaurant_id}) do
     user = Pow.Plug.current_user(conn)
+    meal_params = Map.put(meal_params, "restaurant_id", restaurant_id)
 
     with {:ok, restaurant} <- Menu.get_restaurant(restaurant_id),
          :ok <- Bodyguard.permit(FoodDelivery.Policy, :update_meal, user, restaurant),

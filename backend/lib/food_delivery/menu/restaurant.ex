@@ -18,7 +18,7 @@ defmodule FoodDelivery.Menu.Restaurant do
     field(:name, :string)
     field(:description, :string, default: "", size: 2047)
     field(:img_url, :string, default: "", size: 2047)
-    belongs_to(:user, User, foreign_key: :owner_id)
+    belongs_to(:user, FoodDelivery.Users.User, foreign_key: :owner_id)
     has_many(:meals, FoodDelivery.Menu.Meal)
     has_many(:orders, FoodDelivery.Cart.Order)
 

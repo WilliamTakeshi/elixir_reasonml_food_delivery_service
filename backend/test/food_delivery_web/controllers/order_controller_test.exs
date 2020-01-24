@@ -15,7 +15,7 @@ defmodule FoodDeliveryWeb.OrderControllerTest do
   @invalid_attrs %{date: nil, status: nil}
 
   def fixture(:order) do
-    {:ok, order} = Cart.create_order(@create_attrs)
+    {:ok, order} = Cart.create_or_update_meal_order(@create_attrs)
     order
   end
 
@@ -51,7 +51,7 @@ defmodule FoodDeliveryWeb.OrderControllerTest do
   end
 
   describe "update order" do
-    setup [:create_order]
+    setup [:create_or_update_meal_order]
 
     test "renders order when data is valid", %{conn: conn, order: %Order{id: id} = order} do
       conn = put(conn, Routes.order_path(conn, :update, order), order: @update_attrs)
@@ -73,7 +73,7 @@ defmodule FoodDeliveryWeb.OrderControllerTest do
   end
 
   describe "delete order" do
-    setup [:create_order]
+    setup [:create_or_update_meal_order]
 
     test "deletes chosen order", %{conn: conn, order: order} do
       conn = delete(conn, Routes.order_path(conn, :delete, order))
@@ -85,7 +85,7 @@ defmodule FoodDeliveryWeb.OrderControllerTest do
     end
   end
 
-  defp create_order(_) do
+  defp create_or_update_meal_order(_) do
     order = fixture(:order)
     {:ok, order: order}
   end

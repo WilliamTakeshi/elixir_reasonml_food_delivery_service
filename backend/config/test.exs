@@ -20,3 +20,6 @@ config :food_delivery, FoodDelivery.Repo,
   database: "food_delivery_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Configure your mailer
+config :food_delivery, FoodDeliveryWeb.PowMailer, adapter: Bamboo.TestAdapter

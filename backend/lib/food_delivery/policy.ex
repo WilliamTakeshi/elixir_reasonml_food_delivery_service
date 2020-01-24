@@ -18,14 +18,6 @@ defmodule FoodDelivery.Policy do
     end
   end
 
-  # Users can update they own orders if not_placed
-  def authorize(:update_order, user, order) do
-    cond do
-      user.id == order.user_id and order.status == "not_placed" -> :ok
-      true -> :error
-    end
-  end
-
   # Users can delete they own orders if not_placed
   def authorize(:delete_order, user, order) do
     cond do

@@ -15,8 +15,10 @@ defmodule FoodDeliveryWeb.OrderController do
   end
 
   def create(conn, %{"order_meal" => order_meal_params}) do
+    user = Pow.Plug.current_user(conn)
+
     with {:ok, %{updated_order: %Order{} = order}} <-
-           Cart.create_or_update_meal_order(order_meal_params) do
+           Cart.create_or_update_meal_order(order_meal_params, user) do
       conn
       |> put_resp_header("location", Routes.order_path(conn, :show, order))
       |> render("show.json", order: order)

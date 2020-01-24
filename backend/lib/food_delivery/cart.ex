@@ -68,15 +68,14 @@ defmodule FoodDelivery.Cart do
 
   ## Examples
 
-      iex> create_order(%{field: value})
+      iex> create_or_update_meal_order(%{field: value})
       {:ok, %Order{}}
 
-      iex> create_order(%{field: bad_value})
+      iex> create_or_update_meal_order(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_or_update_meal_order(%{"meal_id" => meal_id, "qty" => qty}) do
-    # FIX: Fix user id
+  def create_or_update_meal_order(%{"meal_id" => meal_id, "qty" => qty}, %User{} = user) do
     meal = Repo.get!(FoodDelivery.Menu.Meal, meal_id)
 
     Ecto.Multi.new()
@@ -86,13 +85,13 @@ defmodule FoodDelivery.Cart do
          from(
            o in Order,
            where:
-             o.restaurant_id == ^meal.restaurant_id and o.user_id == ^1 and
+             o.restaurant_id == ^meal.restaurant_id and o.user_id == ^user.id and
                o.status == ^"not_placed"
          )
        ) || %Order{}}
     end)
     |> Ecto.Multi.insert_or_update(:updated_order, fn %{order: order} ->
-      Ecto.Changeset.change(order, %{restaurant_id: meal.restaurant_id, user_id: 1})
+      Ecto.Changeset.change(order, %{restaurant_id: meal.restaurant_id, user_id: user.id})
     end)
     |> Ecto.Multi.run(:order_meal, fn repo, %{updated_order: updated_order} ->
       {:ok,

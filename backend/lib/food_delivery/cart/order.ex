@@ -17,7 +17,7 @@ defmodule FoodDelivery.Cart.Order do
   schema "orders" do
     field(:status, :string, default: "not_placed")
     belongs_to(:restaurant, FoodDelivery.Menu.Restaurant)
-    belongs_to(:user, FoodDelivery.Users)
+    belongs_to(:user, FoodDelivery.Users.User)
     has_many(:orders_meals, FoodDelivery.Cart.OrderMeal)
 
     field(:placed_date, :utc_datetime)

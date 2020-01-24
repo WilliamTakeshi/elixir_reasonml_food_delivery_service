@@ -13,6 +13,7 @@ defmodule FoodDeliveryWeb.RestaurantController do
 
   def create(conn, %{"restaurant" => restaurant_params}) do
     user = Pow.Plug.current_user(conn)
+    restaurant_params = Map.put(restaurant_params, "owner_id", user.id)
 
     with :ok <-
            Bodyguard.permit(FoodDelivery.Policy, :create_restaurant, user, restaurant_params),
@@ -26,7 +27,7 @@ defmodule FoodDeliveryWeb.RestaurantController do
 
   def show(conn, %{"id" => id}) do
     # TODO add user block
-    user = Pow.Plug.current_user(conn)
+    # user = Pow.Plug.current_user(conn)
 
     with [restaurant] <- Menu.get_restaurant_with_meals(id) do
       render(conn, "show.json", restaurant: restaurant)
@@ -37,7 +38,7 @@ defmodule FoodDeliveryWeb.RestaurantController do
     user = Pow.Plug.current_user(conn)
 
     with {:ok, restaurant} <- Menu.get_restaurant(id),
-         :ok <- Bodyguard.permit(FoodDelivery.Policy, :delete_restaurant, user, restaurant),
+         :ok <- Bodyguard.permit(FoodDelivery.Policy, :update_restaurant, user, restaurant),
          {:ok, %Restaurant{} = restaurant} <-
            Menu.update_restaurant(restaurant, restaurant_params) do
       render(conn, "show.json", restaurant: restaurant)
