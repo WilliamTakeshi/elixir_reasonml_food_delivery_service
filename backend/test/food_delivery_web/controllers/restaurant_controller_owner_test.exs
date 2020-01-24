@@ -113,7 +113,7 @@ defmodule FoodDeliveryWeb.RestaurantControllerOwnerTest do
   end
 
   defp create_restaurant_and_user(_) do
-    %{restaurant: restaurant, user: user} = fixture(:restaurant_and_user)
+    %{restaurant: restaurant} = fixture(:restaurant_and_user)
     {:ok, restaurant: restaurant}
   end
 

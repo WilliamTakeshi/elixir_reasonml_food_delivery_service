@@ -28,7 +28,7 @@ defmodule FoodDeliveryWeb.MealControllerUserTest do
     price: 43,
     restaurant_id: nil
   }
-  @invalid_meal_attrs %{restaurant_id: nil, active: nil, description: nil, name: nil, price: nil}
+  # @invalid_meal_attrs %{restaurant_id: nil, active: nil, description: nil, name: nil, price: nil}
 
   def fixture(:meal) do
     {:ok, owner} =
@@ -106,7 +106,7 @@ defmodule FoodDeliveryWeb.MealControllerUserTest do
 
     test "renders meal when data is valid", %{
       conn: conn,
-      meal: %Meal{id: id} = meal
+      meal: %Meal{} = meal
     } do
       user = Repo.get_by(User, email: "user@example.com")
       conn = Pow.Plug.assign_current_user(conn, user, otp_app: :food_delivery)

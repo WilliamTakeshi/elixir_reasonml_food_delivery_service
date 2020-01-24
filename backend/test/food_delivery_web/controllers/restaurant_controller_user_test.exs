@@ -15,7 +15,7 @@ defmodule FoodDeliveryWeb.RestaurantControllerUserTest do
     name: "some updated name",
     img_url: "some updated img_url"
   }
-  @invalid_attrs %{description: nil, name: nil}
+  # @invalid_attrs %{description: nil, name: nil}
 
   def fixture(:restaurant) do
     {:ok, user} =
@@ -54,7 +54,7 @@ defmodule FoodDeliveryWeb.RestaurantControllerUserTest do
 
     test "forbidden for update restaurant (for user)", %{
       conn: conn,
-      restaurant: %Restaurant{id: id} = restaurant
+      restaurant: %Restaurant{} = restaurant
     } do
       conn =
         put(conn, Routes.restaurant_path(conn, :update, restaurant), restaurant: @update_attrs)

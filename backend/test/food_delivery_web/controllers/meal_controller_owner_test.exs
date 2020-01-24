@@ -42,7 +42,7 @@ defmodule FoodDeliveryWeb.MealControllerOwnerTest do
         otp_app: :food_delivery
       )
 
-    {:ok, user} =
+    {:ok, _user} =
       Pow.Ecto.Context.create(
         %{
           email: "user@example.com",

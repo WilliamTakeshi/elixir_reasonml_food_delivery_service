@@ -145,7 +145,7 @@ defmodule FoodDeliveryWeb.OrderControllerTest do
 
     test "renders order when data is valid", %{
       conn: conn,
-      order: %{updated_order: %Order{id: id} = order}
+      order: %{updated_order: %Order{id: id}}
     } do
       user = Repo.get_by(User, email: "user@example.com")
       conn = Pow.Plug.assign_current_user(conn, user, otp_app: :food_delivery)
