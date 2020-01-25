@@ -14,11 +14,12 @@ let make = () => {
   <div>
     <Nav />
     {switch (url.path, AuthData.isUserLoggedIn()) {
-     | ([], true)
-     | (["restaurants"], true) => <RestaurantsPage />
-     | (["login"], _) => <LoginPage />
+     | (["login"], false) => <LoginPage />
      | (["createaccount"], false) => <CreateAccountPage />
      | (["confirm_email", token], _) => <ConfirmEmailPage token />
+     | (_, false) => <Redirect href="/login" />
+     | ([], true)
+     | (["restaurants"], true) => <RestaurantsPage />
      | (["orders"], true) => <OrdersPage />
      | (["restaurants", id], true) =>
        <RestaurantPage id={int_of_string(id)} />

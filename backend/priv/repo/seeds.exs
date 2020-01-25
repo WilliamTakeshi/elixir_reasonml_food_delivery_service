@@ -32,8 +32,7 @@ FoodDelivery.Repo.insert!(%FoodDelivery.Menu.Restaurant{
   name: "Brazilian food",
   description: "delicious brazilian food",
   owner_id: 2,
-  img_url:
-    "www.englishbaby.com/dynamic/my_photo/image/0000/0002/2017/2017736_1299853222_073306.jpg"
+  img_url: "https://upload.wikimedia.org/wikipedia/commons/8/84/Feijoada_01.jpg"
 })
 
 FoodDelivery.Repo.insert!(%FoodDelivery.Menu.Meal{
@@ -79,7 +78,8 @@ FoodDelivery.Repo.insert!(%FoodDelivery.Menu.Meal{
   description: "It's a simple ham and cheese sandwich in sliced bread, with or without butter",
   price: 500,
   restaurant_id: 2,
-  img_url: "https://en.wikipedia.org/wiki/File:Grilled_ham_and_cheese_014.JPG"
+  img_url:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Grilled_ham_and_cheese_014.JPG/800px-Grilled_ham_and_cheese_014.JPG"
 })
 
 FoodDelivery.Repo.insert!(%FoodDelivery.Menu.Meal{

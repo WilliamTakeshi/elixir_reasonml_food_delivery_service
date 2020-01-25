@@ -39,5 +39,9 @@ let valueFromEvent = (evt): string => evt->ReactEvent.Form.target##value;
 let toMoneyFormat = (value: int): string => {
   let dollar = value / 100;
   let cents = value mod 100;
-  {j|US\$ $dollar.$cents|j};
+  if (cents < 10) {
+    {j|US\$ $dollar.0$cents|j};
+  } else {
+    {j|US\$ $dollar.$cents|j};
+  };
 };
