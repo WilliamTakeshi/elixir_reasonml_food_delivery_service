@@ -50,9 +50,9 @@ defmodule FoodDeliveryWeb.MealController do
     user = Pow.Plug.current_user(conn)
 
     with {:ok, restaurant} <- Menu.get_restaurant(restaurant_id),
-         :ok <- Bodyguard.permit(FoodDelivery.Policy, :delete_meal, user, restaurant),
+         :ok <- Bodyguard.permit(FoodDelivery.Policy, :deactivate_meal, user, restaurant),
          {:ok, meal} <- Menu.get_meal(id, restaurant_id),
-         {:ok, %Meal{}} <- Menu.delete_meal(meal) do
+         {:ok, %Meal{}} <- Menu.deactivate_meal(meal) do
       send_resp(conn, :no_content, "")
     end
   end

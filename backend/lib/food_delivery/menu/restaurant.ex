@@ -33,4 +33,12 @@ defmodule FoodDelivery.Menu.Restaurant do
     |> cast(attrs, @required ++ @optional)
     |> validate_required(@required)
   end
+
+  @update ~w(name description img_url)a
+  @doc false
+  def update_changeset(restaurant, attrs) do
+    restaurant
+    |> cast(attrs, @update)
+    |> validate_required(@update)
+  end
 end

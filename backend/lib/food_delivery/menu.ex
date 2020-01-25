@@ -37,10 +37,12 @@ defmodule FoodDelivery.Menu do
 
   """
   def get_restaurant_with_meals(id) do
+    meals_query = from(m in Meal, where: m.active == true)
+
     Repo.all(
       from(
         r in Restaurant,
-        preload: :meals,
+        preload: [meals: ^meals_query],
         where: r.id == ^id
       )
     )
@@ -99,7 +101,7 @@ defmodule FoodDelivery.Menu do
   """
   def update_restaurant(%Restaurant{} = restaurant, attrs) do
     restaurant
-    |> Restaurant.changeset(attrs)
+    |> Restaurant.update_changeset(attrs)
     |> Repo.update()
   end
 
@@ -144,6 +146,7 @@ defmodule FoodDelivery.Menu do
   def list_meals do
     Repo.all(
       from(m in Meal,
+        where: m.active == true,
         order_by: [m.name, m.id]
       )
     )
@@ -169,7 +172,8 @@ defmodule FoodDelivery.Menu do
         from(m in Meal,
           join: r in assoc(m, :restaurant),
           where: m.id == ^id,
-          where: r.id == ^restaurant_id
+          where: r.id == ^restaurant_id,
+          where: m.active == true
         )
       )
 
@@ -210,9 +214,21 @@ defmodule FoodDelivery.Menu do
 
   """
   def update_meal(%Meal{} = meal, attrs) do
-    meal
-    |> Meal.changeset(attrs)
-    |> Repo.update()
+    deactivate_meal(meal)
+
+    attrs =
+      attrs
+      |> Enum.into(Map.from_struct(meal))
+
+    attrs =
+      for {key, val} <- attrs, into: %{} do
+        cond do
+          is_atom(key) -> {Atom.to_string(key), val}
+          true -> {key, val}
+        end
+      end
+
+    create_meal(attrs)
   end
 
   @doc """
@@ -220,15 +236,17 @@ defmodule FoodDelivery.Menu do
 
   ## Examples
 
-      iex> delete_meal(meal)
+      iex> deactivate_meal(meal)
       {:ok, %Meal{}}
 
-      iex> delete_meal(meal)
+      iex> deactivate_meal(meal)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_meal(%Meal{} = meal) do
-    Repo.delete(meal)
+  def deactivate_meal(%Meal{} = meal) do
+    meal
+    |> Meal.changeset(%{active: false})
+    |> Repo.update()
   end
 
   @doc """

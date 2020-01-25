@@ -11,12 +11,12 @@
 # and so on) as they will fail if something goes wrong.
 
 Pow.Ecto.Context.create(
-  %{email: "owner@test.com", password: "password", confirm_password: "password"},
+  %{email: "owner@example.com", password: "password", confirm_password: "password"},
   otp_app: :food_delivery
 )
 
 Pow.Ecto.Context.create(
-  %{email: "owner2@test.com", password: "password", confirm_password: "password"},
+  %{email: "user@example.com", password: "password", confirm_password: "password"},
   otp_app: :food_delivery
 )
 

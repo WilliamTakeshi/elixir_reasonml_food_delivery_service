@@ -52,7 +52,7 @@ defmodule FoodDelivery.Policy do
   def authorize(:delete_restaurant, _, _), do: :error
 
   # Restaurant owner can update own restaurant
-  def authorize(:update_restaurant, user, restaurant) do
+  def authorize(:update_restaurant, %User{role: "owner"} = user, restaurant) do
     cond do
       user.id == restaurant.owner_id -> :ok
       true -> :error
@@ -77,7 +77,7 @@ defmodule FoodDelivery.Policy do
   end
 
   # Restaurant delete can create meals
-  def authorize(:delete_meal, user, restaurant) do
+  def authorize(:deactivate_meal, user, restaurant) do
     cond do
       user.id == restaurant.owner_id -> :ok
       true -> :error

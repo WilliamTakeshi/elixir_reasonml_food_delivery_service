@@ -167,9 +167,9 @@ defmodule FoodDelivery.MenuTest do
       assert {:ok, meal} == Menu.get_meal(meal.id, restaurant.id)
     end
 
-    test "delete_meal/1 deletes the meal" do
+    test "deactivate_meal/1 deletes the meal" do
       {meal, restaurant} = meal_fixture()
-      assert {:ok, %Meal{}} = Menu.delete_meal(meal)
+      assert {:ok, %Meal{}} = Menu.deactivate_meal(meal)
       assert {:error, :not_found} = Menu.get_meal(meal.id, restaurant.id)
     end
 
