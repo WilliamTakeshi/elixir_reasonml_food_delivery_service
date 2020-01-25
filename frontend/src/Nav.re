@@ -3,13 +3,13 @@ let make = () => {
   <nav>
     <div className="nav-wrapper cyan lighten-1">
       <Link href="/" className="brand-logo">
-        {Utils.str("Food Delivery")}
+        {React.string("Food Delivery")}
       </Link>
       <ul id="nav-mobile" className="right hide-on-med-and-down">
         <li>
-          <Link href="/restaurants"> {Utils.str("Restaurants")} </Link>
+          <Link href="/restaurants"> {React.string("Restaurants")} </Link>
         </li>
-        <li> <Link href="/orders"> {Utils.str("Orders")} </Link> </li>
+        <li> <Link href="/orders"> {React.string("Orders")} </Link> </li>
       </ul>
     </div>
   </nav>;

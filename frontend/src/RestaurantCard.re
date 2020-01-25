@@ -4,15 +4,15 @@ let make = (~restaurant: RestaurantData.restaurant, ~index: int, ()) => {
   <div className="col s12 m4">
     <div className="card medium">
       <div className="card-image">
-        <img src={restaurant.img_url} />
-        <span className="card-title"> {Utils.str(restaurant.name)} </span>
+        <img src={restaurant.imgUrl} />
+        <span className="card-title"> {React.string(restaurant.name)} </span>
       </div>
       <div className="card-content">
-        <p> {Utils.str(restaurant.description)} </p>
+        <p> {React.string(restaurant.description)} </p>
       </div>
       <div className="card-action">
         <Link href={j|/restaurants/$stringId|j}>
-          {Utils.str("Click Here")}
+          {React.string("Click Here")}
         </Link>
       </div>
     </div>

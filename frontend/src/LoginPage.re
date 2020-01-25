@@ -50,8 +50,10 @@ let make = () => {
   <div className="container">
     <div className="row">
       <div className="input-field col s6 offset-s3">
-        <h1 className="text-xs-center"> {Utils.str("Login")} </h1>
-        <Link href="/createaccount"> {Utils.str("Need an account?")} </Link>
+        <h1 className="text-xs-center"> {React.string("Login")} </h1>
+        <Link href="/createaccount">
+          {React.string("Need an account?")}
+        </Link>
       </div>
     </div>
     <div className="row">
@@ -63,7 +65,7 @@ let make = () => {
           value={state.email}
           onChange={evt => Utils.valueFromEvent(evt)->EmailUpdate |> dispatch}
         />
-        <label htmlFor="email"> {Utils.str("E-mail")} </label>
+        <label htmlFor="email"> {React.string("E-mail")} </label>
       </div>
     </div>
     <div className="row">
@@ -77,7 +79,7 @@ let make = () => {
             Utils.valueFromEvent(evt)->PasswordUpdate |> dispatch
           }
         />
-        <label htmlFor="password"> {Utils.str("Password")} </label>
+        <label htmlFor="password"> {React.string("Password")} </label>
         <button
           onClick={_evt =>
             handleSubmit(
@@ -95,7 +97,7 @@ let make = () => {
             )
           }
           className="btn btn-lg btn-primary pull-xs-right">
-          {Utils.str("Login")}
+          {React.string("Login")}
         </button>
       </div>
     </div>

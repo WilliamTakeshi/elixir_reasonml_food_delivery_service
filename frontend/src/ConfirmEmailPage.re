@@ -7,6 +7,6 @@ let make = (~token) => {
   });
 
   <div className="container ">
-    <div className="col s6 offset-s6"> <p> {Utils.str(message)} </p> </div>
+    <div className="col s6 offset-s6"> <p> {React.string(message)} </p> </div>
   </div>;
 };

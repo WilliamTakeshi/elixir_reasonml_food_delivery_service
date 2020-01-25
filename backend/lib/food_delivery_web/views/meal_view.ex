@@ -11,12 +11,6 @@ defmodule FoodDeliveryWeb.MealView do
   end
 
   def render("meal.json", %{meal: meal}) do
-    %{
-      id: meal.id,
-      name: meal.name,
-      description: meal.description,
-      price: meal.price,
-      active: meal.active
-    }
+    meal
   end
 end

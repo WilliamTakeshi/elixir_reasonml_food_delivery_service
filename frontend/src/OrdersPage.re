@@ -19,23 +19,25 @@ let reducer = (state, action) =>
 
 let makeLine = (order_meal: OrderData.order_meal) => {
   <tr>
-    <td> {Utils.str(order_meal.meal.name)} </td>
-    <td> {Utils.str(string_of_int(order_meal.qty))} </td>
+    <td> {React.string(order_meal.meal.name)} </td>
+    <td> {React.string(string_of_int(order_meal.qty))} </td>
     <td>
-      {Utils.str(Utils.toMoneyFormat(order_meal.meal.price * order_meal.qty))}
+      {React.string(
+         Utils.toMoneyFormat(order_meal.meal.price * order_meal.qty),
+       )}
     </td>
   </tr>;
 };
 
 let makeTable = (order: OrderData.order) => {
   <div>
-    <h4> {Utils.str(order.status)} </h4>
+    <h4> {React.string(order.status)} </h4>
     <table className="highlight">
       <thead>
         <tr>
-          <th> {Utils.str("Name")} </th>
-          <th> {Utils.str("Quantity")} </th>
-          <th> {Utils.str("Total Price")} </th>
+          <th> {React.string("Name")} </th>
+          <th> {React.string("Quantity")} </th>
+          <th> {React.string("Total Price")} </th>
         </tr>
       </thead>
       <tbody>

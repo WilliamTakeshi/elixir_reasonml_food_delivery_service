@@ -63,7 +63,7 @@ let make = () => {
           value={state.email}
           onChange={evt => Utils.valueFromEvent(evt)->EmailUpdate |> dispatch}
         />
-        <label htmlFor="email"> {Utils.str("E-mail")} </label>
+        <label htmlFor="email"> {React.string("E-mail")} </label>
       </div>
     </div>
     <div className="row">
@@ -77,7 +77,7 @@ let make = () => {
             Utils.valueFromEvent(evt)->PasswordUpdate |> dispatch
           }
         />
-        <label htmlFor="password"> {Utils.str("Password")} </label>
+        <label htmlFor="password"> {React.string("Password")} </label>
       </div>
     </div>
     <div className="row">
@@ -92,7 +92,7 @@ let make = () => {
           }
         />
         <label htmlFor="confirm_password">
-          {Utils.str("Confirm Password")}
+          {React.string("Confirm Password")}
         </label>
         <button
           onClick={_evt =>

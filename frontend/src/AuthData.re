@@ -14,11 +14,11 @@ let getTokenFromStorage = () => {
 };
 
 let saveRenewTokenToStorage = value => {
-  Dom.Storage.(localStorage |> setItem("jwt", value));
+  Dom.Storage.(localStorage |> setItem("renew_jwt", value));
 };
 
 let getRenewTokenFromStorage = () => {
-  Dom.Storage.(localStorage |> getItem("jwt"));
+  Dom.Storage.(localStorage |> getItem("renew_jwt"));
 };
 
 let isUserLoggedIn = () => {

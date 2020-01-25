@@ -10,11 +10,11 @@ let make = (~meal: RestaurantData.meal, ()) => {
   <div className="col s12 m4">
     <div className="card medium">
       <div className="card-image">
-        <img src={meal.img_url} />
-        <span className="card-title"> {Utils.str(meal.name)} </span>
+        <img src={meal.imgUrl} />
+        <span className="card-title"> {React.string(meal.name)} </span>
       </div>
       <div className="card-content">
-        <p> {Utils.str(meal.description)} </p>
+        <p> {React.string(meal.description)} </p>
       </div>
       <div className="card-action">
         <div className="center">
@@ -45,7 +45,7 @@ let make = (~meal: RestaurantData.meal, ()) => {
               )
             }
             className="btn btn-lg btn-primary pull-xs-right">
-            {Utils.str("Order")}
+            {React.string("Order")}
           </button>
         </div>
       </div>
