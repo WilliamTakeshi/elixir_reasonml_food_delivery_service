@@ -7,6 +7,8 @@ defmodule FoodDelivery.Users.User do
   import Ecto.Changeset
   use Pow.Ecto.Schema
 
+  @derive {Jason.Encoder, only: [:id, :email, :role]}
+
   use Pow.Extension.Ecto.Schema,
     extensions: [PowResetPassword, PowEmailConfirmation]
 

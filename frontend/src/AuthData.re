@@ -5,24 +5,26 @@ type token = {
   renew_token: string,
 };
 
-let saveTokenToStorage = value => {
-  Dom.Storage.(localStorage |> setItem("jwt", value));
+type user = {
+  id: int,
+  email: string,
+  role: string,
 };
 
-let getTokenFromStorage = () => {
-  Dom.Storage.(localStorage |> getItem("jwt"));
+let saveToStorage = (key_: string, value) => {
+  Dom.Storage.(localStorage |> setItem(key_, value));
 };
 
-let saveRenewTokenToStorage = value => {
-  Dom.Storage.(localStorage |> setItem("renew_jwt", value));
+let getFromStorage = (key_: string) => {
+  Dom.Storage.(localStorage |> getItem(key_));
 };
 
-let getRenewTokenFromStorage = () => {
-  Dom.Storage.(localStorage |> getItem("renew_jwt"));
+let removeFromStorage = (key_: string) => {
+  Dom.Storage.(localStorage |> removeItem(key_));
 };
 
 let isUserLoggedIn = () => {
-  switch (getTokenFromStorage()) {
+  switch (getFromStorage("jwt")) {
   | None => false
   | Some(_) => true
   };
@@ -32,6 +34,14 @@ module Decode = {
     Json.Decode.{
       token: json |> field("token", string),
       renew_token: json |> field("renew_token", string),
+    };
+  };
+
+  let user = (json): user => {
+    Json.Decode.{
+      id: json |> field("id", int),
+      email: json |> field("email", string),
+      role: json |> field("role", string),
     };
   };
 };
@@ -53,8 +63,55 @@ let login = body =>
          |> Json.Decode.(at(["data"], Decode.token))
          |> (
            token => {
-             saveTokenToStorage(token.token);
-             saveRenewTokenToStorage(token.renew_token);
+             saveToStorage("jwt", token.token);
+             saveToStorage("renew_token", token.renew_token);
+             resolve();
+           }
+         )
+       )
+    |> ignore
+  ); /* TODO: error handling */
+
+let logout = () =>
+  Js.Promise.(
+    Fetch.fetchWithInit(
+      {j|$apiBaseUrl/api/v1/session|j},
+      Fetch.RequestInit.make(
+        ~method_=Delete,
+        ~headers=Fetch.HeadersInit.make({"Content-Type": "application/json"}),
+        (),
+      ),
+    )
+    |> then_(Fetch.Response.json)
+    |> then_(_json => {
+         removeFromStorage("jwt");
+         removeFromStorage("renew_token");
+         resolve();
+       })
+    |> ignore
+  ); /* TODO: error handling */
+
+let me = () =>
+  Js.Promise.(
+    Fetch.fetchWithInit(
+      {j|$apiBaseUrl/api/v1/me|j},
+      Fetch.RequestInit.make(
+        ~method_=Get,
+        ~headers=
+          Fetch.HeadersInit.make({
+            "Authorization": getFromStorage("jwt"),
+            "Content-Type": "application/json",
+          }),
+        (),
+      ),
+    )
+    |> then_(Fetch.Response.json)
+    |> then_(json =>
+         json
+         |> Json.Decode.(at(["data"], Decode.user))
+         |> (
+           user => {
+             saveToStorage("user_role", user.role);
              resolve();
            }
          )

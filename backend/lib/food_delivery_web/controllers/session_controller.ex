@@ -52,4 +52,9 @@ defmodule FoodDeliveryWeb.SessionController do
 
     json(conn, %{data: %{}})
   end
+
+  def me(conn, _params) do
+    user = Pow.Plug.current_user(conn)
+    json(conn, %{data: user})
+  end
 end

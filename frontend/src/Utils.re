@@ -45,3 +45,16 @@ let toMoneyFormat = (value: int): string => {
     {j|US\$ $dollar.$cents|j};
   };
 };
+
+let translateStatus = (status: string): string => {
+  switch (status) {
+  | "not_placed" => "Not Placed"
+  | "placed" => "Placed"
+  | "canceled" => "Canceled"
+  | "processing" => "Processing"
+  | "in_route" => "In Route"
+  | "delivered" => "Delivered"
+  | "received" => "Received"
+  | _ => "Error"
+  };
+};

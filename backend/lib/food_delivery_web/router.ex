@@ -26,6 +26,8 @@ defmodule FoodDeliveryWeb.Router do
     # pipe_through([:api])
     pipe_through([:api, :api_protected])
 
+    get("/me", SessionController, :me)
+
     resources("/restaurants", RestaurantController, except: [:new, :edit]) do
       resources("/meals", MealController, except: [:new, :edit])
     end

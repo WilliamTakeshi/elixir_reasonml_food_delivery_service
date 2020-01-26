@@ -31,7 +31,7 @@ let makeLine = (order_meal: OrderData.order_meal) => {
 
 let makeTable = (order: OrderData.order) => {
   <div>
-    <h4> {React.string(order.status)} </h4>
+    <h4> {React.string(Utils.translateStatus(order.status))} </h4>
     <table className="highlight">
       <thead>
         <tr>

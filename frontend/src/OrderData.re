@@ -73,7 +73,7 @@ let fetchOrders = callback => {
           ~method_=Get,
           ~headers=
             Fetch.HeadersInit.make({
-              "Authorization": AuthData.getTokenFromStorage(),
+              "Authorization": AuthData.getFromStorage("jwt"),
             }),
           (),
         ),
@@ -104,7 +104,7 @@ let postOrder = body => {
           ~headers=
             Fetch.HeadersInit.make({
               "Content-Type": "application/json",
-              "Authorization": AuthData.getTokenFromStorage(),
+              "Authorization": AuthData.getFromStorage("jwt"),
             }),
           (),
         ),

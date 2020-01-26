@@ -71,7 +71,7 @@ let fetchRestaurants = callback => {
           ~method_=Get,
           ~headers=
             Fetch.HeadersInit.make({
-              "Authorization": AuthData.getTokenFromStorage(),
+              "Authorization": AuthData.getFromStorage("jwt"),
             }),
           (),
         ),
@@ -100,7 +100,7 @@ let fetchRestaurantWithMeal = (id, callback) => {
         ~method_=Get,
         ~headers=
           Fetch.HeadersInit.make({
-            "Authorization": AuthData.getTokenFromStorage(),
+            "Authorization": AuthData.getFromStorage("jwt"),
           }),
         (),
       ),
@@ -131,7 +131,7 @@ let updateRestaurant = (id, body) => {
         ~headers=
           Fetch.HeadersInit.make({
             "Content-Type": "application/json",
-            "Authorization": AuthData.getTokenFromStorage(),
+            "Authorization": AuthData.getFromStorage("jwt"),
           }),
         (),
       ),
@@ -151,7 +151,7 @@ let fetchMeal = (mealId, restaurantId, callback) => {
         ~method_=Get,
         ~headers=
           Fetch.HeadersInit.make({
-            "Authorization": AuthData.getTokenFromStorage(),
+            "Authorization": AuthData.getFromStorage("jwt"),
           }),
         (),
       ),
@@ -184,7 +184,7 @@ let updateMeal = (mealId, restaurantId, body) => {
         ~headers=
           Fetch.HeadersInit.make({
             "Content-Type": "application/json",
-            "Authorization": AuthData.getTokenFromStorage(),
+            "Authorization": AuthData.getFromStorage("jwt"),
           }),
         (),
       ),
