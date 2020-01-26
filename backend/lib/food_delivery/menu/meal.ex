@@ -29,7 +29,6 @@ defmodule FoodDelivery.Menu.Meal do
 
   @required ~w(name price active restaurant_id)a
   @optional ~w(description img_url)a
-
   @doc false
   def changeset(meal, attrs) do
     meal

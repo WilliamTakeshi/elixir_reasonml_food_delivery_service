@@ -84,6 +84,35 @@ defmodule FoodDelivery.Policy do
     end
   end
 
+  # ---------------- Block Controller ----------------
+  def authorize(:index_block, %User{role: "owner"} = user, restaurant) do
+    cond do
+      user.id == restaurant.owner_id -> :ok
+      true -> :error
+    end
+  end
+
+  def authorize(:create_block, %User{role: "owner"} = user, restaurant) do
+    cond do
+      user.id == restaurant.owner_id -> :ok
+      true -> :error
+    end
+  end
+
+  def authorize(:show_block, %User{role: "owner"} = user, restaurant) do
+    cond do
+      user.id == restaurant.owner_id -> :ok
+      true -> :error
+    end
+  end
+
+  def authorize(:delete_block, %User{role: "owner"} = user, restaurant) do
+    cond do
+      user.id == restaurant.owner_id -> :ok
+      true -> :error
+    end
+  end
+
   # --------------------------------------------
   # Catch-all: deny everything else
   def authorize(_, _, _), do: :error
