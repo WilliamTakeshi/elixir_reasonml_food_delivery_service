@@ -46,51 +46,6 @@ module Decode = {
   };
 };
 
-let login = body =>
-  Js.Promise.(
-    Fetch.fetchWithInit(
-      {j|$apiBaseUrl/api/v1/session|j},
-      Fetch.RequestInit.make(
-        ~method_=Post,
-        ~body=Fetch.BodyInit.make(Js.Json.stringify(body)),
-        ~headers=Fetch.HeadersInit.make({"Content-Type": "application/json"}),
-        (),
-      ),
-    )
-    |> then_(Fetch.Response.json)
-    |> then_(json =>
-         json
-         |> Json.Decode.(at(["data"], Decode.token))
-         |> (
-           token => {
-             saveToStorage("jwt", token.token);
-             saveToStorage("renew_token", token.renew_token);
-             resolve();
-           }
-         )
-       )
-    |> ignore
-  ); /* TODO: error handling */
-
-let logout = () =>
-  Js.Promise.(
-    Fetch.fetchWithInit(
-      {j|$apiBaseUrl/api/v1/session|j},
-      Fetch.RequestInit.make(
-        ~method_=Delete,
-        ~headers=Fetch.HeadersInit.make({"Content-Type": "application/json"}),
-        (),
-      ),
-    )
-    |> then_(Fetch.Response.json)
-    |> then_(_json => {
-         removeFromStorage("jwt");
-         removeFromStorage("renew_token");
-         resolve();
-       })
-    |> ignore
-  ); /* TODO: error handling */
-
 let me = () =>
   Js.Promise.(
     Fetch.fetchWithInit(
@@ -118,6 +73,54 @@ let me = () =>
        )
     |> ignore
   ); /* TODO: error handling */
+
+
+let login = body =>
+  Js.Promise.(
+    Fetch.fetchWithInit(
+      {j|$apiBaseUrl/api/v1/session|j},
+      Fetch.RequestInit.make(
+        ~method_=Post,
+        ~body=Fetch.BodyInit.make(Js.Json.stringify(body)),
+        ~headers=Fetch.HeadersInit.make({"Content-Type": "application/json"}),
+        (),
+      ),
+    )
+    |> then_(Fetch.Response.json)
+    |> then_(json =>
+         json
+         |> Json.Decode.(at(["data"], Decode.token))
+         |> (
+           token => {
+             saveToStorage("jwt", token.token);
+             saveToStorage("renew_token", token.renew_token);
+             me();
+             resolve();
+           }
+         )
+       )
+    |> ignore
+  ); /* TODO: error handling */
+
+let logout = () =>
+  Js.Promise.(
+    Fetch.fetchWithInit(
+      {j|$apiBaseUrl/api/v1/session|j},
+      Fetch.RequestInit.make(
+        ~method_=Delete,
+        ~headers=Fetch.HeadersInit.make({"Content-Type": "application/json"}),
+        (),
+      ),
+    )
+    |> then_(Fetch.Response.json)
+    |> then_(_json => {
+         removeFromStorage("jwt");
+         removeFromStorage("renew_token");
+         resolve();
+       })
+    |> ignore
+  ); /* TODO: error handling */
+
 
 let registration = body =>
   Js.Promise.(

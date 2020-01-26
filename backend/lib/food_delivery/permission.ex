@@ -20,6 +20,7 @@ defmodule FoodDelivery.Permission do
   def list_blocks(user) do
     Repo.all(
       from(b in Block,
+        preload: [:user],
         join: r in assoc(b, :restaurant),
         where: r.owner_id == ^user.id
       )

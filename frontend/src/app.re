@@ -7,11 +7,6 @@
 [@react.component]
 let make = () => {
   let url = ReasonReact.Router.useUrl();
-  if (AuthData.isUserLoggedIn()
-      && AuthData.getFromStorage("user_role") == None) {
-    AuthData.me();
-  };
-
   <div>
     <Nav />
     {switch (
@@ -19,7 +14,7 @@ let make = () => {
        AuthData.isUserLoggedIn(),
        AuthData.getFromStorage("user_role"),
      ) {
-     | (["login"], false, _) => <LoginPage />
+     | (["login"], _, _) => <LoginPage />
      | (["createaccount"], false, _) => <CreateAccountPage />
      | (["confirm_email", token], _, _) => <ConfirmEmailPage token />
      | (_, false, _) => <Redirect href="/login" />
@@ -39,6 +34,8 @@ let make = () => {
          restaurantId={int_of_string(restaurantId)}
          mealId={int_of_string(mealId)}
        />
+     | (["restaurants", restaurantId, "blocks"], true, Some("owner")) =>
+       <BlocksPage restaurantId />
      | (_, _, _) => <NotFoundPage />
      }}
   </div>;

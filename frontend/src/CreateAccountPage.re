@@ -50,7 +50,9 @@ let make = () => {
   <div className="container ">
     <div className="row">
       <div className="input-field col s6 offset-s3">
-        <h1 className="text-xs-center"> {str("Create an account")} </h1>
+        <h1 className="text-xs-center">
+          {React.string("Create an account")}
+        </h1>
         <Link href="/"> {React.string("Already have an account")} </Link>
       </div>
     </div>
@@ -112,7 +114,7 @@ let make = () => {
             )
           }
           className="btn btn-lg btn-primary pull-xs-right">
-          {str("Create")}
+          {React.string("Create")}
         </button>
       </div>
     </div>
