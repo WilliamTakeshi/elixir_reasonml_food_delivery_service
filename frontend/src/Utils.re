@@ -55,6 +55,18 @@ let translateStatus = (status: string): string => {
   | "in_route" => "In Route"
   | "delivered" => "Delivered"
   | "received" => "Received"
-  | _ => "Error"
+  | _ => "error"
+  };
+};
+
+let nextStatus = (thisStatus: string) => {
+  switch (thisStatus, AuthData.getFromStorage("user_role")) {
+  | ("not_placed", Some("user")) => "placed"
+  | ("placed", Some("user")) => "canceled"
+  | ("placed", Some("owner")) => "processing"
+  | ("processing", Some("owner")) => "in_route"
+  | ("in_route", Some("owner")) => "delivered"
+  | ("delivered", Some("user")) => "received"
+  | (_, _) => "error"
   };
 };

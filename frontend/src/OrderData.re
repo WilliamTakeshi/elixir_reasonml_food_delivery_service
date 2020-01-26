@@ -122,3 +122,32 @@ let postOrder = body => {
       |> ignore
     ); /* TODO: error handling */
 };
+
+let updtateOrderStatus = (~id, ~status) => {
+  Js.Promise.
+    (
+      Fetch.fetchWithInit(
+        {j|$apiBaseUrl/api/v1/orders/$id/$status|j},
+        Fetch.RequestInit.make(
+          ~method_=Post,
+          ~headers=
+            Fetch.HeadersInit.make({
+              "Content-Type": "application/json",
+              "Authorization": AuthData.getFromStorage("jwt"),
+            }),
+          (),
+        ),
+      )
+      |> then_(Fetch.Response.json)
+      |> then_(json => {
+           json
+           |> Json.Decode.(at(["data"], Decode.order))
+           |> (
+             _orders => {
+               resolve();
+             }
+           )
+         })
+      |> ignore
+    ); /* TODO: error handling */
+};

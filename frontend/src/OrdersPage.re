@@ -30,8 +30,24 @@ let makeLine = (order_meal: OrderData.order_meal) => {
 };
 
 let makeTable = (order: OrderData.order) => {
+  let nextStatus = Utils.nextStatus(order.status);
   <div>
-    <h4> {React.string(Utils.translateStatus(order.status))} </h4>
+    <div className="row">
+      <h4> {React.string(Utils.translateStatus(order.status))} </h4>
+      {if (nextStatus != "error") {
+         <button
+           className="btn btn-lg btn-primary pull-xs-right"
+           onClick={_e => {
+             OrderData.updtateOrderStatus(~id=order.id, ~status=nextStatus)
+           }}>
+           {React.string(
+              "Update status to: " ++ Utils.translateStatus(nextStatus),
+            )}
+         </button>;
+       } else {
+         <div />;
+       }}
+    </div>
     <table className="highlight">
       <thead>
         <tr>
