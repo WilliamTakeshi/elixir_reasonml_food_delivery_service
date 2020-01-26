@@ -6,6 +6,8 @@
 
 [@bs.val] external currentTime: unit => int = "Date.now";
 
+[@bs.send] external filter: (array('a), 'a => bool) => array('a) = "filter";
+
 /* format a timestamp in seconds as relative humanised time sentence */
 let fromNow = unixtime => {
   let delta = currentTime() / 1000 - unixtime;
