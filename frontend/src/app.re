@@ -8,11 +8,11 @@ let make = () => {
        AuthData.isUserLoggedIn(),
        AuthData.getFromStorage("user_role"),
      ) {
+     | ([], _, _) => <HomePage />
      | (["login"], _, _) => <LoginPage />
      | (["createaccount"], false, _) => <CreateAccountPage />
      | (["confirm_email", token], _, _) => <ConfirmEmailPage token />
      | (_, false, _) => <Redirect href="/login" />
-     | ([], true, _)
      | (["restaurants"], true, _) => <RestaurantsPage />
      | (["orders"], true, _) => <OrdersPage />
      | (["restaurants", id], true, _) =>

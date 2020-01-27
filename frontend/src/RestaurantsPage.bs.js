@@ -41,10 +41,9 @@ function RestaurantsPage(Props) {
               className: "container"
             }, React.createElement("div", {
                   className: "row"
-                }, state.restaurants.length !== 0 ? Belt_Array.mapWithIndex(state.restaurants, (function (index, restaurant) {
+                }, state.restaurants.length !== 0 ? Belt_Array.map(state.restaurants, (function (restaurant) {
                           return React.createElement(RestaurantCard$ReasonReactExamples.make, {
                                       restaurant: restaurant,
-                                      index: index,
                                       key: String(restaurant.id)
                                     });
                         })) : null));

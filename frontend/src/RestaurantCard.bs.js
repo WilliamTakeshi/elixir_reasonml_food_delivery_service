@@ -5,9 +5,9 @@ var Link$ReasonReactExamples = require("./link.bs.js");
 
 function RestaurantCard(Props) {
   var restaurant = Props.restaurant;
-  Props.index;
   var stringId = String(restaurant.id);
   return React.createElement("div", {
+              key: String(restaurant.id),
               className: "col s12 m4"
             }, React.createElement("div", {
                   className: "card medium"

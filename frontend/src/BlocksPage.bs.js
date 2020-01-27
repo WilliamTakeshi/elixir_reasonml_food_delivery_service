@@ -38,7 +38,7 @@ function reducer(state, action) {
   }
 }
 
-function makeLine(block, restaurantId, handleUnblock) {
+function makeLine(block, _restaurantId, handleUnblock) {
   return React.createElement("tr", {
               key: String(block.id)
             }, React.createElement("td", undefined, block.user.email), React.createElement("td", undefined, React.createElement("button", {

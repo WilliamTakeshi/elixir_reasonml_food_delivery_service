@@ -9,7 +9,7 @@ type action =
 
 let initialState = {restaurant_with_meal: None};
 
-let reducer = (state, action) =>
+let reducer = (_state, action) =>
   switch (action) {
   | Loaded(restaurant_with_meal) => restaurant_with_meal
   };

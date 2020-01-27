@@ -5,6 +5,7 @@ var Caml_format = require("bs-platform/lib/js/caml_format.js");
 var ReasonReactRouter = require("reason-react/src/ReasonReactRouter.js");
 var Nav$ReasonReactExamples = require("./Nav.bs.js");
 var AuthData$ReasonReactExamples = require("./AuthData.bs.js");
+var HomePage$ReasonReactExamples = require("./HomePage.bs.js");
 var Redirect$ReasonReactExamples = require("./Redirect.bs.js");
 var LoginPage$ReasonReactExamples = require("./LoginPage.bs.js");
 var BlocksPage$ReasonReactExamples = require("./BlocksPage.bs.js");
@@ -136,10 +137,8 @@ function App(Props) {
       default:
         exit$1 = 2;
     }
-  } else if (match$1) {
-    tmp = React.createElement(RestaurantsPage$ReasonReactExamples.make, { });
   } else {
-    exit$1 = 2;
+    tmp = React.createElement(HomePage$ReasonReactExamples.make, { });
   }
   if (exit$1 === 2) {
     if (match$1) {

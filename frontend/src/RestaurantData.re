@@ -87,6 +87,12 @@ let fetchRestaurants = callback => {
              }
            )
          })
+      |> catch(_error => {
+           // If not authenticated
+           AuthData.logout();
+           ReasonReact.Router.push("/login");
+           resolve();
+         })
       |> ignore
     ); /* TODO: error handling */
 };

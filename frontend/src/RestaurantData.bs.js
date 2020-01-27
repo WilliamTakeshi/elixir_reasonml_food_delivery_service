@@ -4,6 +4,7 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var Fetch = require("bs-fetch/src/Fetch.js");
 var Caml_option = require("bs-platform/lib/js/caml_option.js");
 var Json_decode = require("@glennsl/bs-json/src/Json_decode.bs.js");
+var ReasonReactRouter = require("reason-react/src/ReasonReactRouter.js");
 var AuthData$ReasonReactExamples = require("./AuthData.bs.js");
 
 var apiBaseUrl = "http://localhost:4000";
@@ -54,15 +55,19 @@ var Decode = {
 
 function fetchRestaurants(callback) {
   fetch("" + (String(apiBaseUrl) + "/api/v1/restaurants"), Fetch.RequestInit.make(/* Get */0, {
-                  Authorization: AuthData$ReasonReactExamples.getFromStorage("jwt")
-                }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(/* () */0)).then((function (prim) {
-            return prim.json();
-          })).then((function (json) {
-          var restaurants$1 = Json_decode.at(/* :: */[
-                  "data",
-                  /* [] */0
-                ], restaurants)(json);
-          Curry._1(callback, restaurants$1);
+                    Authorization: AuthData$ReasonReactExamples.getFromStorage("jwt")
+                  }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(/* () */0)).then((function (prim) {
+              return prim.json();
+            })).then((function (json) {
+            var restaurants$1 = Json_decode.at(/* :: */[
+                    "data",
+                    /* [] */0
+                  ], restaurants)(json);
+            Curry._1(callback, restaurants$1);
+            return Promise.resolve(/* () */0);
+          })).catch((function (_error) {
+          AuthData$ReasonReactExamples.logout(/* () */0);
+          ReasonReactRouter.push("/login");
           return Promise.resolve(/* () */0);
         }));
   return /* () */0;
@@ -133,4 +138,4 @@ exports.fetchRestaurantWithMeal = fetchRestaurantWithMeal;
 exports.updateRestaurant = updateRestaurant;
 exports.fetchMeal = fetchMeal;
 exports.updateMeal = updateMeal;
-/* AuthData-ReasonReactExamples Not a pure module */
+/* ReasonReactRouter Not a pure module */

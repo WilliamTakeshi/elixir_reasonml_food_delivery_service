@@ -21,7 +21,7 @@ module Styles = {
 let make = () =>
   <div className=Styles.container>
     <div className=Styles.image>
-      <img alt="Page not found" src="/src/notfound404.png" />
+      <img alt="Page not found" src="/img/notfound404.png" />
     </div>
     <div className=Styles.text>
       <span>

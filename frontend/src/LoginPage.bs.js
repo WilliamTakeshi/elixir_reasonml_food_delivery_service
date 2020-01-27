@@ -118,7 +118,7 @@ function LoginPage(Props) {
                                     /* [] */0
                                   ]);
                               AuthData$ReasonReactExamples.login(state$1);
-                              ReasonReactRouter.push("/");
+                              ReasonReactRouter.push("/restaurants");
                               return Curry._1(dispatch, /* ResetState */1);
                             })
                         }, "Login"))));

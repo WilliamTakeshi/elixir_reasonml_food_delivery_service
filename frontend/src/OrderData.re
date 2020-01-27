@@ -114,7 +114,7 @@ let postOrder = body => {
            json
            |> Json.Decode.(at(["data"], Decode.order))
            |> (
-             orders => {
+             _orders => {
                resolve();
              }
            )

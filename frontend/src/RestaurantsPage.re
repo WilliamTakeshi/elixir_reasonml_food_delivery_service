@@ -31,10 +31,9 @@ let make = () => {
       {if (Array.length(state.restaurants) > 0) {
          state.restaurants
          ->(
-             Array.mapWithIndex((index, restaurant) =>
+             Array.map(restaurant =>
                <RestaurantCard
                  key={string_of_int(restaurant.id)}
-                 index
                  restaurant
                />
              )

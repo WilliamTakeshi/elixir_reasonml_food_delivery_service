@@ -10,7 +10,7 @@ var initialState = {
   restaurant_with_meal: undefined
 };
 
-function reducer(state, action) {
+function reducer(_state, action) {
   return action[0];
 }
 

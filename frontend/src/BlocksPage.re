@@ -21,7 +21,7 @@ let reducer = (state, action) =>
   | UpdateEmail(email) => {...state, email}
   };
 
-let makeLine = (block: BlockData.block, restaurantId, handleUnblock) => {
+let makeLine = (block: BlockData.block, _restaurantId, handleUnblock) => {
   <tr key={string_of_int(block.id)}>
     <td> {React.string(block.user.email)} </td>
     <td>

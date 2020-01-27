@@ -43,7 +43,7 @@ let make = () => {
 
   let handleSubmit = state => {
     AuthData.login(state);
-    ReasonReact.Router.push("/");
+    ReasonReact.Router.push("/restaurants");
     dispatch(ResetState);
   };
 

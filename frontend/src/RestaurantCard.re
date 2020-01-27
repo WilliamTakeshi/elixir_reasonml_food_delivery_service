@@ -1,7 +1,7 @@
 [@react.component]
-let make = (~restaurant: RestaurantData.restaurant, ~index: int, ()) => {
+let make = (~restaurant: RestaurantData.restaurant, ()) => {
   let stringId = string_of_int(restaurant.id);
-  <div className="col s12 m4">
+  <div className="col s12 m4" key={string_of_int(restaurant.id)}>
     <div className="card medium">
       <div className="card-image">
         <img src={restaurant.imgUrl} />
