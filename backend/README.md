@@ -9,6 +9,10 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+## Postman
+
+You can import the API on Postman using the link: https://www.getpostman.com/collections/d09e15f4eb4427df7fca
+
 ## Seeds
 
 The seed start some users listed below
@@ -18,11 +22,27 @@ The seed start some users listed below
 
 The seed also start some restaurants and meals for easier testing
 
+## Config
+
+All configuration is divided in `config/config.exs` `config/dev.exs`, `config/test.exs`, `config/prod.exs` and `config/prod.secret.exs`
+
+- `config/config.exs`: is loaded on all configs
+- `config/dev.exs`: is loaded when setting the env variable MIX_ENV=dev (default)
+- `config/test.exs`: is loaded when setting the env variable MIX_ENV=test (default for some commands like `mix dev`)
+- `config/prod.exs`: is loaded when setting the env variable MIX_ENV=prod, this one should be used when creating releases
+- `config/prod.secret.exs`: is loaded when setting the env variable MIX_ENV=prod, this file is not on git, all keys should be here
+
+### Observation
+
+There is a SendGrid key committed on `config/dev.exs`. This should not be the default, but I committed to save toptal`s time to evaluate the code.
+
 ## Tests
 
 To run tests you can use `mix test`
 
-All tests are async so it is really fast to add new tests and doesn't hit the performance too much
+Many tests are async, because Ecto.Adapters.SQL.Sandbox async tests involving a database can be done without worry. This means that the vast majority of tests in your Phoenix application will be able to be run asynchronously
+
+So it is really fast to add new tests and doesn't hit the performance too much
 
 '''Finished in 33.6 seconds
 51 tests, 0 failures'''

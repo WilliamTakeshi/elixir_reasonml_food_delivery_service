@@ -1,5 +1,9 @@
 # Food Delivery
 
-The project is divided in front and back end.
+The project is divided in frontend and backend.
 
-The front-end is written in reasonML and the back-end in elixir
+The frontend is written in ReasonML and the backend in Elixir
+
+## Instructions
+
+The instructions are divided in `frontend/README.md` and `backend/README.md`
