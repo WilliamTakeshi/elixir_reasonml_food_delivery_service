@@ -22,7 +22,7 @@ defmodule FoodDeliveryWeb.MealControllerOwnerTest do
     restaurant_id: nil
   }
   @update_meal_attrs %{
-    active: false,
+    active: true,
     description: "some updated description",
     name: "some updated name",
     price: 43,
@@ -137,13 +137,18 @@ defmodule FoodDeliveryWeb.MealControllerOwnerTest do
           meal: @update_meal_attrs
         )
 
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
+      assert %{
+               "active" => true,
+               "description" => "some updated description",
+               "img_url" => "",
+               "price" => 43
+             } = json_response(conn, 200)["data"]
 
       # conn = get(conn, Routes.restaurant_meal_path(conn, :show, restaurant.id, id))
 
       assert %{
                "id" => id,
-               "active" => false,
+               "active" => true,
                "description" => "some updated description",
                "name" => "some updated name",
                "price" => 43

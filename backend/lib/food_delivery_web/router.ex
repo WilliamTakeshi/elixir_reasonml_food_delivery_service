@@ -29,8 +29,8 @@ defmodule FoodDeliveryWeb.Router do
     get("/me", SessionController, :me)
 
     resources("/restaurants", RestaurantController, except: [:new, :edit]) do
-      resources("/meals", MealController, except: [:new, :edit, :update])
-      resources("/blocks", BlockController, except: [:new, :edit])
+      resources("/meals", MealController, except: [:new, :edit])
+      resources("/blocks", BlockController, except: [:new, :edit, :update])
     end
 
     resources("/orders", OrderController, except: [:new, :edit])

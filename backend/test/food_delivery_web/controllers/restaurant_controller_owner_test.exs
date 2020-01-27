@@ -82,11 +82,7 @@ defmodule FoodDeliveryWeb.RestaurantControllerOwnerTest do
       conn =
         put(conn, Routes.restaurant_path(conn, :update, restaurant), restaurant: @update_attrs)
 
-      assert %{
-               "description" => "some updated description",
-               "img_url" => "some updated img_url",
-               "name" => "some updated name"
-             } = json_response(conn, 200)["data"]
+      assert json_response(conn, 403)["errors"] != %{}
     end
 
     test "renders errors when data is invalid", %{conn: conn, restaurant: restaurant} do
@@ -96,7 +92,7 @@ defmodule FoodDeliveryWeb.RestaurantControllerOwnerTest do
       conn =
         put(conn, Routes.restaurant_path(conn, :update, restaurant), restaurant: @invalid_attrs)
 
-      assert json_response(conn, 422)["errors"] != %{}
+      assert json_response(conn, 403)["errors"] != %{}
     end
   end
 

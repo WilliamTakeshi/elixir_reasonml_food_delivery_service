@@ -35,13 +35,6 @@ defmodule FoodDeliveryWeb.RestaurantControllerUserTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  describe "index" do
-    test "lists all restaurants (for user)", %{conn: conn} do
-      conn = get(conn, Routes.restaurant_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
-    end
-  end
-
   describe "create restaurant" do
     test "forbidden for create restaurant (for user)", %{conn: conn} do
       conn = post(conn, Routes.restaurant_path(conn, :create), restaurant: @create_attrs)

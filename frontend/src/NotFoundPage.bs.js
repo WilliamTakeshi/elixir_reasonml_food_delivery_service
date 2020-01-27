@@ -34,7 +34,7 @@ var Styles = {
   text: text
 };
 
-function NotFound(Props) {
+function NotFoundPage(Props) {
   return React.createElement("div", {
               className: container
             }, React.createElement("div", {
@@ -50,7 +50,7 @@ function NotFound(Props) {
                     })));
 }
 
-var make = NotFound;
+var make = NotFoundPage;
 
 exports.Styles = Styles;
 exports.make = make;

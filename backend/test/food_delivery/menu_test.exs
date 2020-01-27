@@ -6,10 +6,16 @@ defmodule FoodDelivery.MenuTest do
   describe "restaurants" do
     alias FoodDelivery.Menu.Restaurant
 
-    @valid_attrs %{description: "some description", name: "some name", owner_id: nil}
+    @valid_attrs %{
+      description: "some description",
+      name: "some name",
+      img_url: "some img",
+      owner_id: nil
+    }
     @update_attrs %{
       description: "some updated description",
-      name: "some updated name"
+      name: "some updated name",
+      img_url: "some updated img"
     }
     @invalid_attrs %{description: nil, name: nil, owner_id: nil}
 
@@ -37,11 +43,6 @@ defmodule FoodDelivery.MenuTest do
         |> Menu.create_restaurant()
 
       restaurant
-    end
-
-    test "list_restaurants/0 returns all restaurants" do
-      restaurant = restaurant_fixture()
-      assert Menu.list_restaurants() == [restaurant]
     end
 
     test "get_restaurant!/1 returns the restaurant with given id" do
@@ -104,7 +105,7 @@ defmodule FoodDelivery.MenuTest do
       restaurant_id: nil
     }
     @update_attrs %{
-      active: false,
+      active: true,
       description: "some updated description",
       name: "some updated name",
       price: 43
@@ -152,19 +153,13 @@ defmodule FoodDelivery.MenuTest do
                Menu.create_meal(%{@invalid_attrs | restaurant_id: restaurant.id})
     end
 
-    test "update_meal/2 with valid data updates the meal" do
+    test "update_meal/2 with valid data creates a new meal" do
       {meal, _restaurant} = meal_fixture()
       assert {:ok, %Meal{} = meal} = Menu.update_meal(meal, @update_attrs)
-      assert meal.active == false
+      assert meal.active == true
       assert meal.description == "some updated description"
       assert meal.name == "some updated name"
       assert meal.price == 43
-    end
-
-    test "update_meal/2 with invalid data returns error changeset" do
-      {meal, restaurant} = meal_fixture()
-      assert {:error, %Ecto.Changeset{}} = Menu.update_meal(meal, @invalid_attrs)
-      assert {:ok, meal} == Menu.get_meal(meal.id, restaurant.id)
     end
 
     test "deactivate_meal/1 deletes the meal" do
