@@ -18,8 +18,20 @@ defmodule FoodDelivery.Menu do
       [%Restaurant{}, ...]
 
   """
-  def list_restaurants do
-    Repo.all(Restaurant)
+  def list_restaurants(user) do
+    blocked_restaurant_ids =
+      Repo.all(
+        from(b in FoodDelivery.Permission.Block,
+          where: b.user_id == ^user.id,
+          select: b.restaurant_id
+        )
+      )
+
+    Repo.all(
+      from(r in Restaurant,
+        where: not (r.id in ^blocked_restaurant_ids)
+      )
+    )
   end
 
   @doc """
@@ -36,14 +48,23 @@ defmodule FoodDelivery.Menu do
       ** (Ecto.NoResultsError)
 
   """
-  def get_restaurant_with_meals(id) do
+  def get_restaurant_with_meals(id, user) do
+    blocked_restaurant_ids =
+      Repo.all(
+        from(b in FoodDelivery.Permission.Block,
+          where: b.user_id == ^user.id,
+          select: b.restaurant_id
+        )
+      )
+
     meals_query = from(m in Meal, where: m.active == true)
 
     Repo.all(
       from(
         r in Restaurant,
         preload: [meals: ^meals_query],
-        where: r.id == ^id
+        where: r.id == ^id,
+        where: not (r.id in ^blocked_restaurant_ids)
       )
     )
   end

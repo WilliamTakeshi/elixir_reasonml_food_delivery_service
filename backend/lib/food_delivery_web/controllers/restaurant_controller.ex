@@ -7,7 +7,9 @@ defmodule FoodDeliveryWeb.RestaurantController do
   action_fallback(FoodDeliveryWeb.FallbackController)
 
   def index(conn, _params) do
-    restaurants = Menu.list_restaurants()
+    user = Pow.Plug.current_user(conn)
+
+    restaurants = Menu.list_restaurants(user)
     render(conn, "index.json", restaurants: restaurants)
   end
 
@@ -26,10 +28,9 @@ defmodule FoodDeliveryWeb.RestaurantController do
   end
 
   def show(conn, %{"id" => id}) do
-    # TODO add user block
-    # user = Pow.Plug.current_user(conn)
+    user = Pow.Plug.current_user(conn)
 
-    with [restaurant] <- Menu.get_restaurant_with_meals(id) do
+    with [restaurant] <- Menu.get_restaurant_with_meals(id, user) do
       render(conn, "show.json", restaurant: restaurant)
     end
   end
@@ -37,7 +38,7 @@ defmodule FoodDeliveryWeb.RestaurantController do
   def update(conn, %{"id" => id, "restaurant" => restaurant_params}) do
     user = Pow.Plug.current_user(conn)
 
-    with {:ok, restaurant} <- Menu.get_restaurant(id),
+    with {:ok, restaurant} <- Menu.get_restaurant(id, user),
          :ok <- Bodyguard.permit(FoodDelivery.Policy, :update_restaurant, user, restaurant),
          {:ok, %Restaurant{} = restaurant} <-
            Menu.update_restaurant(restaurant, restaurant_params) do
@@ -48,7 +49,7 @@ defmodule FoodDeliveryWeb.RestaurantController do
   def delete(conn, %{"id" => id}) do
     user = Pow.Plug.current_user(conn)
 
-    with {:ok, restaurant} <- Menu.get_restaurant(id),
+    with {:ok, restaurant} <- Menu.get_restaurant(id, user),
          :ok <- Bodyguard.permit(FoodDelivery.Policy, :delete_restaurant, user, restaurant),
          {:ok, %Restaurant{}} <- Menu.delete_restaurant(restaurant) do
       send_resp(conn, :no_content, "")

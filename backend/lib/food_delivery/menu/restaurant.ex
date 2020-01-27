@@ -21,6 +21,7 @@ defmodule FoodDelivery.Menu.Restaurant do
     belongs_to(:user, FoodDelivery.Users.User, foreign_key: :owner_id)
     has_many(:meals, FoodDelivery.Menu.Meal)
     has_many(:orders, FoodDelivery.Cart.Order)
+    has_many(:blocks, FoodDelivery.Permission.Block)
 
     timestamps()
   end
