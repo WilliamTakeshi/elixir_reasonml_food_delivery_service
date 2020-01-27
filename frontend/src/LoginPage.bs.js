@@ -118,8 +118,11 @@ function LoginPage(Props) {
                                     /* [] */0
                                   ]);
                               AuthData$ReasonReactExamples.login(state$1);
-                              ReasonReactRouter.push("/restaurants");
-                              return Curry._1(dispatch, /* ResetState */1);
+                              Curry._1(dispatch, /* ResetState */1);
+                              setTimeout((function (param) {
+                                      return ReasonReactRouter.push("/restaurants");
+                                    }), 1000);
+                              return /* () */0;
                             })
                         }, "Login"))));
 }

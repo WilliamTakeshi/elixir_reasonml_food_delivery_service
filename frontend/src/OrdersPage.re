@@ -51,9 +51,9 @@ let makeTable = (order: OrderData.order) => {
     <table className="highlight">
       <thead>
         <tr>
-          <th> {React.string("Name")} </th>
-          <th> {React.string("Quantity")} </th>
-          <th> {React.string("Total Price")} </th>
+          <th width="60%"> {React.string("Name")} </th>
+          <th width="20%"> {React.string("Quantity")} </th>
+          <th width="20%"> {React.string("Total Price")} </th>
         </tr>
       </thead>
       <tbody>

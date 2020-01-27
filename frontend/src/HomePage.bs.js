@@ -6,7 +6,7 @@ function HomePage(Props) {
   return React.createElement("div", {
               className: "container"
             }, React.createElement("div", {
-                  className: "row"
+                  className: "center"
                 }, React.createElement("img", {
                       alt: "girl sitting",
                       src: "/img/sitting-2.svg"

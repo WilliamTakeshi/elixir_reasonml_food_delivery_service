@@ -2,7 +2,7 @@
 let make = () => {
   let url = ReasonReact.Router.useUrl();
   <div>
-    <Nav />
+    <Nav loggedIn={AuthData.isUserLoggedIn()} />
     {switch (
        url.path,
        AuthData.isUserLoggedIn(),
@@ -10,6 +10,7 @@ let make = () => {
      ) {
      | ([], _, _) => <HomePage />
      | (["login"], _, _) => <LoginPage />
+     | (["logout"], _, _) => <LogoutPage />
      | (["createaccount"], false, _) => <CreateAccountPage />
      | (["confirm_email", token], _, _) => <ConfirmEmailPage token />
      | (_, false, _) => <Redirect href="/login" />

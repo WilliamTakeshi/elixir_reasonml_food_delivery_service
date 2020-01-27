@@ -1,8 +1,3 @@
-/*
-    TODO
-    add error handler
- */
-
 type state = {
   email: string,
   password: string,
@@ -43,8 +38,9 @@ let make = () => {
 
   let handleSubmit = state => {
     AuthData.login(state);
-    ReasonReact.Router.push("/restaurants");
     dispatch(ResetState);
+    Js.Global.setTimeout(_ => ReasonReact.Router.push("/restaurants"), 1000)
+    |> ignore;
   };
 
   <div className="container">

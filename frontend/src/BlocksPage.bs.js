@@ -102,7 +102,11 @@ function BlocksPage(Props) {
                         })
                     }, "Block")), React.createElement("table", {
                   className: "highlight"
-                }, React.createElement("thead", undefined, React.createElement("tr", undefined, React.createElement("th", undefined, "Email"), React.createElement("th", undefined, "Unblock"))), React.createElement("tbody", undefined, Belt_Array.map(state.blocks, (function (block) {
+                }, React.createElement("thead", undefined, React.createElement("tr", undefined, React.createElement("th", {
+                              width: "70%"
+                            }, "Email"), React.createElement("th", {
+                              width: "30%"
+                            }, "Unblock"))), React.createElement("tbody", undefined, Belt_Array.map(state.blocks, (function (block) {
                             return makeLine(block, restaurantId, handleUnblock);
                           })))));
 }

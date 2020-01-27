@@ -4,6 +4,7 @@ var React = require("react");
 var Link$ReasonReactExamples = require("./link.bs.js");
 
 function Nav(Props) {
+  var loggedIn = Props.loggedIn;
   return React.createElement("nav", undefined, React.createElement("div", {
                   className: "nav-wrapper cyan lighten-1"
                 }, React.createElement(Link$ReasonReactExamples.make, {
@@ -13,7 +14,13 @@ function Nav(Props) {
                     }), React.createElement("ul", {
                       className: "right hide-on-med-and-down",
                       id: "nav-mobile"
-                    }, React.createElement("li", undefined, React.createElement(Link$ReasonReactExamples.make, {
+                    }, loggedIn ? React.createElement("li", undefined, React.createElement(Link$ReasonReactExamples.make, {
+                                href: "/logout",
+                                children: "Logout"
+                              })) : React.createElement("li", undefined, React.createElement(Link$ReasonReactExamples.make, {
+                                href: "/login",
+                                children: "Login"
+                              })), React.createElement("li", undefined, React.createElement(Link$ReasonReactExamples.make, {
                               href: "/restaurants",
                               children: "Restaurants"
                             })), React.createElement("li", undefined, React.createElement(Link$ReasonReactExamples.make, {

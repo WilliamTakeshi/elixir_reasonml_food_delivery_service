@@ -9,6 +9,7 @@ var HomePage$ReasonReactExamples = require("./HomePage.bs.js");
 var Redirect$ReasonReactExamples = require("./Redirect.bs.js");
 var LoginPage$ReasonReactExamples = require("./LoginPage.bs.js");
 var BlocksPage$ReasonReactExamples = require("./BlocksPage.bs.js");
+var LogoutPage$ReasonReactExamples = require("./LogoutPage.bs.js");
 var OrdersPage$ReasonReactExamples = require("./OrdersPage.bs.js");
 var EditMealPage$ReasonReactExamples = require("./EditMealPage.bs.js");
 var NotFoundPage$ReasonReactExamples = require("./NotFoundPage.bs.js");
@@ -97,6 +98,13 @@ function App(Props) {
             tmp = React.createElement(LoginPage$ReasonReactExamples.make, { });
           }
           break;
+      case "logout" :
+          if (match[1]) {
+            exit$1 = 2;
+          } else {
+            tmp = React.createElement(LogoutPage$ReasonReactExamples.make, { });
+          }
+          break;
       case "orders" :
           if (match[1] || !match$1) {
             exit$1 = 2;
@@ -152,7 +160,9 @@ function App(Props) {
   if (exit === 1) {
     tmp = React.createElement(NotFoundPage$ReasonReactExamples.make, { });
   }
-  return React.createElement("div", undefined, React.createElement(Nav$ReasonReactExamples.make, { }), tmp);
+  return React.createElement("div", undefined, React.createElement(Nav$ReasonReactExamples.make, {
+                  loggedIn: AuthData$ReasonReactExamples.isUserLoggedIn(/* () */0)
+                }), tmp);
 }
 
 var make = App;

@@ -44,7 +44,13 @@ function makeTable(order) {
                           })
                       }, "Update status to: " + Utils$ReasonReactExamples.translateStatus(nextStatus)) : React.createElement("div", undefined)), React.createElement("table", {
                   className: "highlight"
-                }, React.createElement("thead", undefined, React.createElement("tr", undefined, React.createElement("th", undefined, "Name"), React.createElement("th", undefined, "Quantity"), React.createElement("th", undefined, "Total Price"))), React.createElement("tbody", undefined, match !== undefined ? Belt_Array.map(match, makeLine) : null)));
+                }, React.createElement("thead", undefined, React.createElement("tr", undefined, React.createElement("th", {
+                              width: "60%"
+                            }, "Name"), React.createElement("th", {
+                              width: "20%"
+                            }, "Quantity"), React.createElement("th", {
+                              width: "20%"
+                            }, "Total Price"))), React.createElement("tbody", undefined, match !== undefined ? Belt_Array.map(match, makeLine) : null)));
 }
 
 function OrdersPage(Props) {

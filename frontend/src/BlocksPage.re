@@ -86,8 +86,8 @@ let make = (~restaurantId) => {
     <table className="highlight">
       <thead>
         <tr>
-          <th> {React.string("Email")} </th>
-          <th> {React.string("Unblock")} </th>
+          <th width="70%"> {React.string("Email")} </th>
+          <th width="30%"> {React.string("Unblock")} </th>
         </tr>
       </thead>
       <tbody>
