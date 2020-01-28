@@ -26,9 +26,9 @@ defmodule FoodDelivery.Users do
     |> Repo.insert()
   end
 
-  @spec set_owner_role(t()) :: {:ok, t()} | {:error, Ecto.Changeset.t()}
-  def set_owner_role(user) do
-    user
+  @spec set_owner_role(integer) :: {:ok, t()} | {:error, Ecto.Changeset.t()}
+  def set_owner_role(id) do
+    Repo.get(User, id)
     |> User.changeset_role(%{role: "owner"})
     |> Repo.update()
   end
