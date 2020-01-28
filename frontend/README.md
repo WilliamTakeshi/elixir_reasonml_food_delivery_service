@@ -13,6 +13,19 @@ npm start
 
 Open a new web page to `http://localhost:8000/`. Change any `.re` file in `src` to see the page auto-reload. **You don't need any bundler when you're developing**!
 
+## Routes
+
+- `/login`: Login Page
+- `/logout`: Logout Page
+- `/createaccount`: Create Account Page
+- `/confirm_email/token`: Confirm Email Token Page
+- `/restaurants`: List Restaurant Page
+- `/restaurants/:id`: Single Restaurant Page
+- `/restaurants/:id/edit`: Edit Restaurant Page
+- `/restaurants/:id/meals/:meal_id/edit`: Edit Meal Page
+- `/restaurants/:id/blocks`: Restaurant - User Blocked
+- `/orders`: Orders Page
+
 ## How to contribute
 
 The best file to start reading the code is `app.re`. There is the ReasonReact Router where we make all pattern matchs to see with route the user will see. The router also checks if the user has permission to see the route.

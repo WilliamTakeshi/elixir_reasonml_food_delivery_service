@@ -19,6 +19,11 @@ You can import the API on Postman using the link: https://www.getpostman.com/col
 The seed start some users listed below
 
 - Owner of the restaurant with `id: 1` `email: "owner@example.com", password: "password"`
+- Owner of the restaurant with `id: 2` `email: "owner2@example.com", password: "password"`
+- Owner of the restaurant with `id: 3` `email: "owner3@example.com", password: "password"`
+- Owner of the restaurant with `id: 4` `email: "owner4@example.com", password: "password"`
+- Owner of the restaurant with `id: 5` `email: "owner5@example.com", password: "password"`
+- Owner of the restaurant with `id: 6` `email: "owner6@example.com", password: "password"`
 - Regular user `email: "user@example.com", password: "password"`
 
 The seed also start some restaurants and meals for easier testing
