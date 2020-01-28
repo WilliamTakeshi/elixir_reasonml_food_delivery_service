@@ -92,7 +92,7 @@ let make = () => {
               ),
             )
           }
-          className="btn btn-lg btn-primary pull-xs-right">
+          className="btn btn-lg btn-primary pull-xs-right green lighten-2">
           {React.string("Login")}
         </button>
       </div>

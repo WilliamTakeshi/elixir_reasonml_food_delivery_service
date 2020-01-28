@@ -10,7 +10,7 @@ function HomePage(Props) {
                 }, React.createElement("img", {
                       alt: "girl sitting",
                       src: "/img/sitting-2.svg"
-                    }), React.createElement("p", undefined, "Ask food anytime anywhere")));
+                    }), React.createElement("h5", undefined, "Ask food anytime anywhere")));
 }
 
 var make = HomePage;

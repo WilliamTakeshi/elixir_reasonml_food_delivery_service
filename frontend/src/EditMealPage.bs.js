@@ -146,7 +146,7 @@ function EditMealPage(Props) {
                     })), React.createElement("div", {
                   className: "input-field col s4 offset-s4"
                 }, React.createElement("button", {
-                      className: "btn btn-lg btn-primary pull-xs-right",
+                      className: "btn btn-lg btn-primary pull-xs-right green lighten-2",
                       onClick: (function (_evt) {
                           var state$1 = state;
                           var match = state$1.meal;

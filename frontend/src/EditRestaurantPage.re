@@ -77,7 +77,9 @@ let make = (~id) => {
                />
              </div>
              <div className="input-field col s4 offset-s4">
-               <label className="active"> {React.string("Description")} </label>
+               <label className="active">
+                 {React.string("Description")}
+               </label>
                <textarea
                  value={restaurant.description}
                  className="materialize-textarea"
@@ -94,7 +96,7 @@ let make = (~id) => {
              <div className="input-field col s4 offset-s4">
                <button
                  onClick={_evt => handleSubmit(state)}
-                 className="btn btn-lg btn-primary pull-xs-right">
+                 className="btn btn-lg btn-primary pull-xs-right green lighten-2">
                  {React.string("Update restaurant")}
                </button>
              </div>

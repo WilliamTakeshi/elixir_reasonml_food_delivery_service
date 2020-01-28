@@ -6,11 +6,17 @@ var Link$ReasonReactExamples = require("./link.bs.js");
 function Nav(Props) {
   var loggedIn = Props.loggedIn;
   return React.createElement("nav", undefined, React.createElement("div", {
-                  className: "nav-wrapper cyan lighten-1"
+                  className: "nav-wrapper red lighten-4"
                 }, React.createElement(Link$ReasonReactExamples.make, {
                       href: "/",
                       className: "brand-logo",
-                      children: "Food Delivery"
+                      children: React.createElement("img", {
+                            style: {
+                              height: "70px",
+                              marginLeft: "16px"
+                            },
+                            src: "img/logo2.png"
+                          })
                     }), React.createElement("ul", {
                       className: "right hide-on-med-and-down",
                       id: "nav-mobile"

@@ -29,16 +29,18 @@ let makeLine = (order_meal: OrderData.order_meal) => {
   </tr>;
 };
 
-let makeTable = (order: OrderData.order) => {
+let makeTable = (order: OrderData.order, dispatch) => {
   let nextStatus = Utils.nextStatus(order.status);
   <div>
     <div className="row">
       <h4> {React.string(Utils.translateStatus(order.status))} </h4>
       {if (nextStatus != "error") {
          <button
-           className="btn btn-lg btn-primary pull-xs-right"
+           className="btn btn-lg btn-primary pull-xs-right green lighten-2"
            onClick={_e => {
-             OrderData.updtateOrderStatus(~id=order.id, ~status=nextStatus)
+             OrderData.updtateOrderStatus(~id=order.id, ~status=nextStatus);
+             OrderData.fetchOrders(payload => dispatch(Loaded(payload)))
+             |> ignore;
            }}>
            {React.string(
               "Update status to: " ++ Utils.translateStatus(nextStatus),
@@ -79,6 +81,8 @@ let make = () => {
   });
 
   <div className="container">
-    {state.orders->(Array.map(order => makeTable(order)))->React.array}
+    {state.orders
+     ->(Array.map(order => makeTable(order, dispatch)))
+     ->React.array}
   </div>;
 };

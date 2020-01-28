@@ -4,6 +4,7 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var Caml_format = require("bs-platform/lib/js/caml_format.js");
 var Json_encode = require("@glennsl/bs-json/src/Json_encode.bs.js");
+var Utils$ReasonReactExamples = require("./Utils.bs.js");
 var OrderData$ReasonReactExamples = require("./OrderData.bs.js");
 
 function MealCard(Props) {
@@ -16,7 +17,7 @@ function MealCard(Props) {
   return React.createElement("div", {
               className: "col s12 m4"
             }, React.createElement("div", {
-                  className: "card medium"
+                  className: "card large"
                 }, React.createElement("div", {
                       className: "card-image"
                     }, React.createElement("img", {
@@ -25,12 +26,12 @@ function MealCard(Props) {
                           className: "card-title"
                         }, meal.name)), React.createElement("div", {
                       className: "card-content"
-                    }, React.createElement("p", undefined, meal.description)), React.createElement("div", {
+                    }, React.createElement("p", undefined, meal.description), React.createElement("p", undefined, Utils$ReasonReactExamples.toMoneyFormat(meal.price))), React.createElement("div", {
                       className: "card-action"
                     }, React.createElement("div", {
                           className: "center"
                         }, React.createElement("input", {
-                              className: "validate col s4 offset-s4",
+                              className: "validate col s4",
                               max: "20",
                               min: 0,
                               type: "number",
@@ -39,9 +40,9 @@ function MealCard(Props) {
                                   return Curry._1(setQty, evt.target.value);
                                 })
                             })), React.createElement("div", {
-                          className: "center"
+                          className: "right"
                         }, React.createElement("button", {
-                              className: "btn btn-lg btn-primary pull-xs-right",
+                              className: "btn btn-lg btn-primary pull-xs-right green lighten-2",
                               onClick: (function (param) {
                                   var state = Json_encode.object_(/* :: */[
                                         /* tuple */[

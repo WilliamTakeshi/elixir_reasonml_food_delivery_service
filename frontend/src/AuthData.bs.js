@@ -88,6 +88,7 @@ function logout(param) {
                 }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(/* () */0)).then((function (prim) {
             return prim.json();
           })).then((function (_json) {
+          localStorage.removeItem("user_role");
           localStorage.removeItem("jwt");
           localStorage.removeItem("renew_token");
           return Promise.resolve(/* () */0);

@@ -27,7 +27,7 @@ let makeLine = (block: BlockData.block, _restaurantId, handleUnblock) => {
     <td>
       <button
         onClick={_evt => handleUnblock(block.id)}
-        className="btn btn-lg btn-primary pull-xs-right">
+        className="btn btn-lg btn-primary pull-xs-right green lighten-2">
         {React.string("Unblock")}
       </button>
     </td>
@@ -79,7 +79,7 @@ let make = (~restaurantId) => {
             Json.Encode.(object_([("email", string(state.email))])),
           )
         }
-        className="btn btn-lg btn-primary pull-xs-right">
+        className="btn btn-lg btn-primary pull-xs-right green lighten-2">
         {React.string("Block")}
       </button>
     </div>

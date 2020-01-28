@@ -23,7 +23,7 @@ function RestaurantCard(Props) {
                       className: "card-action"
                     }, React.createElement(Link$ReasonReactExamples.make, {
                           href: "/restaurants/" + (String(stringId) + ""),
-                          children: "Click Here"
+                          children: "See more"
                         }))));
 }
 

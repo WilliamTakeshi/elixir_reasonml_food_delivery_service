@@ -114,6 +114,7 @@ let logout = () =>
     )
     |> then_(Fetch.Response.json)
     |> then_(_json => {
+         removeFromStorage("user_role");
          removeFromStorage("jwt");
          removeFromStorage("renew_token");
          resolve();

@@ -32,15 +32,19 @@ function makeLine(order_meal) {
   return React.createElement("tr", undefined, React.createElement("td", undefined, order_meal.meal.name), React.createElement("td", undefined, String(order_meal.qty)), React.createElement("td", undefined, Utils$ReasonReactExamples.toMoneyFormat(Caml_int32.imul(order_meal.meal.price, order_meal.qty))));
 }
 
-function makeTable(order) {
+function makeTable(order, dispatch) {
   var nextStatus = Utils$ReasonReactExamples.nextStatus(order.status);
   var match = order.orders_meals;
   return React.createElement("div", undefined, React.createElement("div", {
                   className: "row"
                 }, React.createElement("h4", undefined, Utils$ReasonReactExamples.translateStatus(order.status)), nextStatus !== "error" ? React.createElement("button", {
-                        className: "btn btn-lg btn-primary pull-xs-right",
+                        className: "btn btn-lg btn-primary pull-xs-right green lighten-2",
                         onClick: (function (_e) {
-                            return OrderData$ReasonReactExamples.updtateOrderStatus(order.id, nextStatus);
+                            OrderData$ReasonReactExamples.updtateOrderStatus(order.id, nextStatus);
+                            OrderData$ReasonReactExamples.fetchOrders((function (payload) {
+                                    return Curry._1(dispatch, /* Loaded */[payload]);
+                                  }));
+                            return /* () */0;
                           })
                       }, "Update status to: " + Utils$ReasonReactExamples.translateStatus(nextStatus)) : React.createElement("div", undefined)), React.createElement("table", {
                   className: "highlight"
@@ -64,7 +68,9 @@ function OrdersPage(Props) {
         }), ([]));
   return React.createElement("div", {
               className: "container"
-            }, Belt_Array.map(match[0].orders, makeTable));
+            }, Belt_Array.map(match[0].orders, (function (order) {
+                    return makeTable(order, dispatch);
+                  })));
 }
 
 var make = OrdersPage;

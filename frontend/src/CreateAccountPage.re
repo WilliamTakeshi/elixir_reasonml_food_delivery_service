@@ -53,7 +53,7 @@ let make = () => {
         <h1 className="text-xs-center">
           {React.string("Create an account")}
         </h1>
-        <Link href="/"> {React.string("Already have an account")} </Link>
+        <Link href="/login"> {React.string("Already have an account")} </Link>
       </div>
     </div>
     <div className="row">
@@ -113,7 +113,7 @@ let make = () => {
               ),
             )
           }
-          className="btn btn-lg btn-primary pull-xs-right">
+          className="btn btn-lg btn-primary pull-xs-right green lighten-2">
           {React.string("Create")}
         </button>
       </div>

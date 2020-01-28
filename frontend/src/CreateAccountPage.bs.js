@@ -68,7 +68,7 @@ function CreateAccountPage(Props) {
                     }, React.createElement("h1", {
                           className: "text-xs-center"
                         }, "Create an account"), React.createElement(Link$ReasonReactExamples.make, {
-                          href: "/",
+                          href: "/login",
                           children: "Already have an account"
                         }))), React.createElement("div", {
                   className: "row"
@@ -113,7 +113,7 @@ function CreateAccountPage(Props) {
                         }), React.createElement("label", {
                           htmlFor: "confirm_password"
                         }, "Confirm Password"), React.createElement("button", {
-                          className: "btn btn-lg btn-primary pull-xs-right",
+                          className: "btn btn-lg btn-primary pull-xs-right green lighten-2",
                           onClick: (function (_evt) {
                               var state$1 = Json_encode.object_(/* :: */[
                                     /* tuple */[

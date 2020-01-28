@@ -1,9 +1,16 @@
 [@react.component]
 let make = (~loggedIn: bool) => {
   <nav>
-    <div className="nav-wrapper cyan lighten-1">
+    <div className="nav-wrapper red lighten-4">
       <Link href="/" className="brand-logo">
-        {React.string("Food Delivery")}
+        <img
+          src="img/logo2.png"
+          style={ReactDOMRe.Style.make(
+            ~height="70px",
+            ~marginLeft="16px",
+            (),
+          )}
+        />
       </Link>
       <ul id="nav-mobile" className="right hide-on-med-and-down">
         {if (!loggedIn) {

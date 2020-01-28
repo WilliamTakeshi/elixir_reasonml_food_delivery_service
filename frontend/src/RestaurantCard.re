@@ -12,7 +12,7 @@ let make = (~restaurant: RestaurantData.restaurant, ()) => {
       </div>
       <div className="card-action">
         <Link href={j|/restaurants/$stringId|j}>
-          {React.string("Click Here")}
+          {React.string("See more")}
         </Link>
       </div>
     </div>

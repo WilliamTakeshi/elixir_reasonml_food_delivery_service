@@ -42,7 +42,7 @@ function makeLine(block, _restaurantId, handleUnblock) {
   return React.createElement("tr", {
               key: String(block.id)
             }, React.createElement("td", undefined, block.user.email), React.createElement("td", undefined, React.createElement("button", {
-                      className: "btn btn-lg btn-primary pull-xs-right",
+                      className: "btn btn-lg btn-primary pull-xs-right green lighten-2",
                       onClick: (function (_evt) {
                           return Curry._1(handleUnblock, block.id);
                         })
@@ -83,7 +83,7 @@ function BlocksPage(Props) {
                     }), React.createElement("label", {
                       htmlFor: "email"
                     }, "E-mail"), React.createElement("button", {
-                      className: "btn btn-lg btn-primary pull-xs-right",
+                      className: "btn btn-lg btn-primary pull-xs-right green lighten-2",
                       onClick: (function (_evt) {
                           var value = Json_encode.object_(/* :: */[
                                 /* tuple */[

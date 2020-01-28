@@ -96,7 +96,7 @@ function LoginPage(Props) {
                         }), React.createElement("label", {
                           htmlFor: "password"
                         }, "Password"), React.createElement("button", {
-                          className: "btn btn-lg btn-primary pull-xs-right",
+                          className: "btn btn-lg btn-primary pull-xs-right green lighten-2",
                           onClick: (function (_evt) {
                               var state$1 = Json_encode.object_(/* :: */[
                                     /* tuple */[
