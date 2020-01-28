@@ -23,7 +23,8 @@ defmodule FoodDelivery.Menu do
       Repo.all(
         from(b in FoodDelivery.Permission.Block,
           where: b.user_id == ^user.id,
-          select: b.restaurant_id
+          select: b.restaurant_id,
+          order_by: [b.id]
         )
       )
 

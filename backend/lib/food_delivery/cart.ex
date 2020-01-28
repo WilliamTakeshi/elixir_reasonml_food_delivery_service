@@ -19,7 +19,8 @@ defmodule FoodDelivery.Cart do
     Repo.all(
       from(o in Order,
         preload: [orders_meals: :meal],
-        where: o.user_id == ^user.id
+        where: o.user_id == ^user.id,
+        order_by: [o.id]
       )
     )
   end
@@ -32,7 +33,8 @@ defmodule FoodDelivery.Cart do
       from(o in Order,
         join: r in assoc(o, :restaurant),
         preload: [orders_meals: :meal],
-        where: r.owner_id == ^user.id or o.user_id == ^user.id
+        where: r.owner_id == ^user.id or o.user_id == ^user.id,
+        order_by: [o.id]
       )
     )
   end
