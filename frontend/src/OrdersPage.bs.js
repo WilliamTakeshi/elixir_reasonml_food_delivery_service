@@ -41,9 +41,11 @@ function makeTable(order, dispatch) {
                         className: "btn btn-lg btn-primary pull-xs-right green lighten-2",
                         onClick: (function (_e) {
                             OrderData$ReasonReactExamples.updtateOrderStatus(order.id, nextStatus);
-                            OrderData$ReasonReactExamples.fetchOrders((function (payload) {
-                                    return Curry._1(dispatch, /* Loaded */[payload]);
-                                  }));
+                            setTimeout((function (param) {
+                                    return OrderData$ReasonReactExamples.fetchOrders((function (payload) {
+                                                  return Curry._1(dispatch, /* Loaded */[payload]);
+                                                }));
+                                  }), 700);
                             return /* () */0;
                           })
                       }, "Update status to: " + Utils$ReasonReactExamples.translateStatus(nextStatus)) : React.createElement("div", undefined)), React.createElement("table", {

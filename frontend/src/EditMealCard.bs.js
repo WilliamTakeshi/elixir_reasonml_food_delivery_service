@@ -24,7 +24,7 @@ function EditMealCard(Props) {
                     }, React.createElement("div", {
                           className: "center"
                         }, React.createElement(Link$ReasonReactExamples.make, {
-                              href: "/edit/restaurants/" + (String(restaurantId) + ("/meals/" + (String(mealId) + " "))),
+                              href: "/restaurants/" + (String(restaurantId) + ("/meals/" + (String(mealId) + "/edit "))),
                               children: React.createElement("button", {
                                     className: "btn btn-lg btn-primary pull-xs-right green lighten-2"
                                   }, "Edit")

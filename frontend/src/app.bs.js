@@ -48,49 +48,6 @@ function App(Props) {
             tmp = React.createElement(CreateAccountPage$ReasonReactExamples.make, { });
           }
           break;
-      case "edit" :
-          var match$4 = match[1];
-          if (match$4 && match$4[0] === "restaurants") {
-            var match$5 = match$4[1];
-            if (match$5) {
-              var match$6 = match$5[1];
-              var id = match$5[0];
-              if (match$6) {
-                if (match$6[0] === "meals") {
-                  var match$7 = match$6[1];
-                  if (match$7 && !(match$7[1] || !match$1)) {
-                    if (match$2 === "owner") {
-                      tmp = React.createElement(EditMealPage$ReasonReactExamples.make, {
-                            mealId: Caml_format.caml_int_of_string(match$7[0]),
-                            restaurantId: Caml_format.caml_int_of_string(id)
-                          });
-                    } else {
-                      exit = 1;
-                    }
-                  } else {
-                    exit$1 = 2;
-                  }
-                } else {
-                  exit$1 = 2;
-                }
-              } else if (match$1) {
-                if (match$2 === "owner") {
-                  tmp = React.createElement(EditRestaurantPage$ReasonReactExamples.make, {
-                        id: Caml_format.caml_int_of_string(id)
-                      });
-                } else {
-                  exit = 1;
-                }
-              } else {
-                exit$1 = 2;
-              }
-            } else {
-              exit$1 = 2;
-            }
-          } else {
-            exit$1 = 2;
-          }
-          break;
       case "login" :
           if (match[1]) {
             exit$1 = 2;
@@ -113,25 +70,60 @@ function App(Props) {
           }
           break;
       case "restaurants" :
-          var match$8 = match[1];
-          if (match$8) {
-            var match$9 = match$8[1];
-            var id$1 = match$8[0];
-            if (match$9) {
-              if (match$9[0] === "blocks" && !(match$9[1] || !match$1)) {
-                if (match$2 === "owner") {
-                  tmp = React.createElement(BlocksPage$ReasonReactExamples.make, {
-                        restaurantId: id$1
-                      });
-                } else {
-                  exit = 1;
-                }
-              } else {
-                exit$1 = 2;
+          var match$4 = match[1];
+          if (match$4) {
+            var match$5 = match$4[1];
+            var id = match$4[0];
+            if (match$5) {
+              switch (match$5[0]) {
+                case "blocks" :
+                    if (match$5[1] || !match$1) {
+                      exit$1 = 2;
+                    } else if (match$2 === "owner") {
+                      tmp = React.createElement(BlocksPage$ReasonReactExamples.make, {
+                            restaurantId: id
+                          });
+                    } else {
+                      exit = 1;
+                    }
+                    break;
+                case "edit" :
+                    if (match$5[1] || !match$1) {
+                      exit$1 = 2;
+                    } else if (match$2 === "owner") {
+                      tmp = React.createElement(EditRestaurantPage$ReasonReactExamples.make, {
+                            id: Caml_format.caml_int_of_string(id)
+                          });
+                    } else {
+                      exit = 1;
+                    }
+                    break;
+                case "meals" :
+                    var match$6 = match$5[1];
+                    if (match$6) {
+                      var match$7 = match$6[1];
+                      if (match$7 && match$7[0] === "edit" && !(match$7[1] || !match$1)) {
+                        if (match$2 === "owner") {
+                          tmp = React.createElement(EditMealPage$ReasonReactExamples.make, {
+                                mealId: Caml_format.caml_int_of_string(match$6[0]),
+                                restaurantId: Caml_format.caml_int_of_string(id)
+                              });
+                        } else {
+                          exit = 1;
+                        }
+                      } else {
+                        exit$1 = 2;
+                      }
+                    } else {
+                      exit$1 = 2;
+                    }
+                    break;
+                default:
+                  exit$1 = 2;
               }
             } else if (match$1) {
               tmp = React.createElement(RestaurantPage$ReasonReactExamples.make, {
-                    id: Caml_format.caml_int_of_string(id$1)
+                    id: Caml_format.caml_int_of_string(id)
                   });
             } else {
               exit$1 = 2;

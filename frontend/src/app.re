@@ -18,10 +18,10 @@ let make = () => {
      | (["orders"], true, _) => <OrdersPage />
      | (["restaurants", id], true, _) =>
        <RestaurantPage id={int_of_string(id)} />
-     | (["edit", "restaurants", id], true, Some("owner")) =>
+     | (["restaurants", id, "edit"], true, Some("owner")) =>
        <EditRestaurantPage id={int_of_string(id)} />
      | (
-         ["edit", "restaurants", restaurantId, "meals", mealId],
+         ["restaurants", restaurantId, "meals", mealId, "edit"],
          true,
          Some("owner"),
        ) =>

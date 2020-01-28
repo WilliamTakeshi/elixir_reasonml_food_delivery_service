@@ -14,7 +14,7 @@ let make = (~meal: RestaurantData.meal, ()) => {
       </div>
       <div className="card-action">
         <div className="center">
-          <Link href={j|/edit/restaurants/$restaurantId/meals/$mealId |j}>
+          <Link href={j|/restaurants/$restaurantId/meals/$mealId/edit |j}>
             <button
               className="btn btn-lg btn-primary pull-xs-right green lighten-2">
               {React.string("Edit")}

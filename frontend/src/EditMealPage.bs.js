@@ -4,6 +4,7 @@ var Block = require("bs-platform/lib/js/block.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var Json_encode = require("@glennsl/bs-json/src/Json_encode.bs.js");
+var ReasonReactRouter = require("reason-react/src/ReasonReactRouter.js");
 var RestaurantData$ReasonReactExamples = require("./RestaurantData.bs.js");
 
 var initialState = {
@@ -183,7 +184,8 @@ function EditMealPage(Props) {
                                   ],
                                   /* [] */0
                                 ]);
-                            return RestaurantData$ReasonReactExamples.updateMeal(mealId, restaurantId, body);
+                            RestaurantData$ReasonReactExamples.updateMeal(mealId, restaurantId, body);
+                            return ReasonReactRouter.push("/restaurants");
                           } else {
                             console.log("error: restaurant not loaded");
                             return /* () */0;

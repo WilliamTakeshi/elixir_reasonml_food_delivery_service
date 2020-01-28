@@ -42,6 +42,7 @@ let make = (~mealId, ~restaurantId, ()) => {
           ])
         );
       RestaurantData.updateMeal(mealId, restaurantId, body);
+      ReasonReact.Router.push("/restaurants");
     };
   };
 

@@ -39,7 +39,11 @@ let makeTable = (order: OrderData.order, dispatch) => {
            className="btn btn-lg btn-primary pull-xs-right green lighten-2"
            onClick={_e => {
              OrderData.updtateOrderStatus(~id=order.id, ~status=nextStatus);
-             OrderData.fetchOrders(payload => dispatch(Loaded(payload)))
+             Js.Global.setTimeout(
+               _ =>
+                 OrderData.fetchOrders(payload => dispatch(Loaded(payload))),
+               700,
+             )
              |> ignore;
            }}>
            {React.string(
