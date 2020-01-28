@@ -30,7 +30,8 @@ defmodule FoodDelivery.Menu do
 
     Repo.all(
       from(r in Restaurant,
-        where: not (r.id in ^blocked_restaurant_ids)
+        where: not (r.id in ^blocked_restaurant_ids),
+        order_by: [r.id]
       )
     )
   end
