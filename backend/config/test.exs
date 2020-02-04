@@ -15,8 +15,8 @@ config :logger, level: :warn
 
 # Configure your database
 config :food_delivery, FoodDelivery.Repo,
-  username: "william",
-  password: "william",
+  username: "postgres",
+  password: "postgres",
   database: "food_delivery_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

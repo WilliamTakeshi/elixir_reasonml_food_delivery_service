@@ -51,8 +51,8 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Configure your database
 config :food_delivery, FoodDelivery.Repo,
-  username: "william",
-  password: "william",
+  username: "postgres",
+  password: "postgres",
   database: "food_delivery_dev",
   hostname: "localhost",
   pool_size: 10
@@ -60,4 +60,4 @@ config :food_delivery, FoodDelivery.Repo,
 # Configure your mailer
 config :food_delivery, FoodDeliveryWeb.PowMailer,
   adapter: Bamboo.SendGridAdapter,
-  api_key: "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"
+  api_key: "My_API_key"
