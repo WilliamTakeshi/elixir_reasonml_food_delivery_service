@@ -4,7 +4,7 @@ let make = (~loggedIn: bool) => {
     <div className="nav-wrapper red lighten-4">
       <Link href="/" className="brand-logo">
         <img
-          src="img/logo2.png"
+          src="https://i.imgur.com/Asy12cn.png"
           style={ReactDOMRe.Style.make(
             ~height="70px",
             ~marginLeft="16px",
