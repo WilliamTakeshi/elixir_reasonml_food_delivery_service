@@ -38,10 +38,6 @@ All configuration is divided in `config/config.exs` `config/dev.exs`, `config/te
 - `config/prod.exs`: is loaded when setting the env variable MIX_ENV=prod, this one should be used when creating releases
 - `config/prod.secret.exs`: is loaded when setting the env variable MIX_ENV=prod, this file is not on git, all keys should be here
 
-### Observation
-
-There is a SendGrid key committed on `config/dev.exs`. This should not be the default, but I committed to save toptal`s time to evaluate the code.
-
 ## Tests
 
 To run tests you can use `mix test`
